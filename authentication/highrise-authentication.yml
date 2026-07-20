@@ -1,0 +1,23 @@
+generated: '2026-07-19'
+method: searched
+source: https://create.highrise.game/learn/guides/bots/creating-a-bot
+docs: https://create.highrise.game/learn/guides/bots/creating-a-bot
+summary:
+  types: [apiKey]
+  api_key_in: [header, connection-param]
+  oauth2_flows: []
+  notes: >-
+    Highrise uses a static API token (not OAuth). Bot developers mint an API token from the Highrise
+    account settings ("Bots & API Keys") and pair it with a room ID. The token is passed when
+    establishing the Bot API WebSocket connection (and by the CLI: `highrise mybot:Bot <room_id>
+    <api_token>`). The read-only Web API serves public data.
+schemes:
+- name: BotApiToken
+  type: apiKey
+  in: header
+  scheme: token
+  description: >-
+    Per-bot API token generated in Highrise account settings, bound to a specific room ID. Presented
+    when opening the wss://highrise.game/web/botapi WebSocket connection.
+  provisioning: https://highrise.game/account/settings
+  sources: [https://create.highrise.game/learn/guides/bots/creating-a-bot]
