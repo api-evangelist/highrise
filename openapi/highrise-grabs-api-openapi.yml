@@ -1,0 +1,73 @@
+openapi: 3.1.0
+info:
+  title: Highrise Web grabs API
+  version: '2026.04'
+  description: Read-only REST API for public Highrise data (users, rooms, posts, items, grabs). Generated faithfully from the official highrise-bot-sdk web-api client (github.com/pocketzworld/python-bot-sdk, src/highrise/webapi.py) and the create.highrise.game Web API reference. Highrise does not publish an OpenAPI document; this profiles the documented surface only — no invented paths.
+  x-provenance:
+    generated: '2026-07-19'
+    method: generated
+    source: https://github.com/pocketzworld/python-bot-sdk/blob/main/src/highrise/webapi.py
+  x-apievangelist-note: The Web API is read-only (GET). Single-resource endpoints return by id; collection endpoints accept filter and pagination query parameters (starts_after cursor + limit).
+servers:
+- url: https://webapi.highrise.game
+  description: Highrise public Web API
+tags:
+- name: grabs
+paths:
+  /grabs:
+    get:
+      tags:
+      - grabs
+      operationId: getGrabs
+      summary: List public grabs
+      parameters:
+      - $ref: '#/components/parameters/StartsAfter'
+      - $ref: '#/components/parameters/SortOrder'
+      - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: A page of grabs.
+  /grabs/{grab_id}:
+    get:
+      tags:
+      - grabs
+      operationId: getGrab
+      summary: Get a public grab
+      parameters:
+      - $ref: '#/components/parameters/GrabId'
+      responses:
+        '200':
+          description: The grab.
+        '404':
+          description: Grab not found.
+components:
+  parameters:
+    Limit:
+      name: limit
+      in: query
+      required: false
+      schema:
+        type: integer
+        default: 20
+    SortOrder:
+      name: sort_order
+      in: query
+      required: false
+      schema:
+        type: string
+        enum:
+        - asc
+        - desc
+    GrabId:
+      name: grab_id
+      in: path
+      required: true
+      schema:
+        type: string
+    StartsAfter:
+      name: starts_after
+      in: query
+      required: false
+      description: Cursor — return results after this id.
+      schema:
+        type: string

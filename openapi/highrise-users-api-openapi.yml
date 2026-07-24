@@ -1,0 +1,74 @@
+openapi: 3.1.0
+info:
+  title: Highrise Web grabs users API
+  version: '2026.04'
+  description: Read-only REST API for public Highrise data (users, rooms, posts, items, grabs). Generated faithfully from the official highrise-bot-sdk web-api client (github.com/pocketzworld/python-bot-sdk, src/highrise/webapi.py) and the create.highrise.game Web API reference. Highrise does not publish an OpenAPI document; this profiles the documented surface only — no invented paths.
+  x-provenance:
+    generated: '2026-07-19'
+    method: generated
+    source: https://github.com/pocketzworld/python-bot-sdk/blob/main/src/highrise/webapi.py
+  x-apievangelist-note: The Web API is read-only (GET). Single-resource endpoints return by id; collection endpoints accept filter and pagination query parameters (starts_after cursor + limit).
+servers:
+- url: https://webapi.highrise.game
+  description: Highrise public Web API
+tags:
+- name: users
+paths:
+  /users:
+    get:
+      tags:
+      - users
+      operationId: getUsers
+      summary: List public users
+      description: Returns a filtered, paginated collection of public users.
+      parameters:
+      - $ref: '#/components/parameters/StartsAfter'
+      - $ref: '#/components/parameters/SortOrder'
+      - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: A page of users.
+  /users/{user_id}:
+    get:
+      tags:
+      - users
+      operationId: getUser
+      summary: Get a public user
+      parameters:
+      - $ref: '#/components/parameters/UserId'
+      responses:
+        '200':
+          description: The user.
+        '404':
+          description: User not found.
+components:
+  parameters:
+    Limit:
+      name: limit
+      in: query
+      required: false
+      schema:
+        type: integer
+        default: 20
+    UserId:
+      name: user_id
+      in: path
+      required: true
+      schema:
+        type: string
+    SortOrder:
+      name: sort_order
+      in: query
+      required: false
+      schema:
+        type: string
+        enum:
+        - asc
+        - desc
+    StartsAfter:
+      name: starts_after
+      in: query
+      required: false
+      description: Cursor — return results after this id.
+      schema:
+        type: string
