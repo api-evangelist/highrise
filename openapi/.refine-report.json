@@ -1,0 +1,22 @@
+{
+  "provider": "highrise",
+  "sources": [
+    "highrise-grabs-api-openapi.yml",
+    "highrise-items-api-openapi.yml",
+    "highrise-posts-api-openapi.yml",
+    "highrise-rooms-api-openapi.yml",
+    "highrise-users-api-openapi.yml"
+  ],
+  "outputs": [
+    "highrise-grabs-api-openapi.yml",
+    "highrise-items-api-openapi.yml",
+    "highrise-posts-api-openapi.yml",
+    "highrise-rooms-api-openapi.yml",
+    "highrise-users-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

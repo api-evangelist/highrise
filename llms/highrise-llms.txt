@@ -1,0 +1,31 @@
+# Highrise
+
+> Highrise (Pocket Worlds Inc) is a mobile-first virtual world where users create avatars, hang out in social rooms, design and trade fashion items, and build custom worlds. Its developer platform exposes a WebSocket Bot API, a read-only REST Web API, and Highrise Studio (Lua Engine + Cloud API) for world building.
+
+## APIs
+- [Highrise Bot API](https://create.highrise.game/learn/guides/bots/creating-a-bot): WebSocket bots inside rooms (wss://highrise.game/web/botapi). Official Python and .NET SDKs.
+- [Highrise Web API](https://create.highrise.game/learn): Read-only REST for public users, rooms, posts, items, grabs (https://webapi.highrise.game).
+- [Highrise Studio](https://create.highrise.game): Engine API + Cloud API, Lua scripting for worlds and games.
+
+## Specs
+- [Web API OpenAPI](openapi/highrise-web-api-openapi.yml): Generated from the official SDK web-api client.
+- [Bot API AsyncAPI](asyncapi/highrise-bot-api-asyncapi.yml): Bot event surface (chat, emote, joins, tips, voice, DMs, moderation).
+
+## Docs
+- [Developer Portal (Highrise Create)](https://create.highrise.game)
+- [Bot guides](https://create.highrise.game/learn/guides/bots/creating-a-bot)
+- [Support](https://support.highrise.game)
+- [Partnerships](https://create.highrise.game/partnerships)
+
+## SDKs & Tools
+- [Python Bot SDK (PyPI: highrise-bot-sdk)](https://pypi.org/project/highrise-bot-sdk/)
+- [Python Bot SDK (source)](https://github.com/pocketzworld/python-bot-sdk)
+- [.NET SDK (source)](https://github.com/pocketzworld/highrise-net-sdk)
+- [GitHub org: Pocket Worlds](https://github.com/pocketzworld)
+
+## Auth
+- Static per-bot API token from https://highrise.game/account/settings, bound to a room ID.
+
+## Legal
+- [Terms of Service](https://highrise.game/terms-of-service)
+- [Privacy Policy](https://highrise.game/privacy-policy)

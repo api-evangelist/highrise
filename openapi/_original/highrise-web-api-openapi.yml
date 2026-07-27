@@ -1,0 +1,191 @@
+openapi: 3.1.0
+info:
+  title: Highrise Web API
+  version: '2026.04'
+  description: >-
+    Read-only REST API for public Highrise data (users, rooms, posts, items, grabs). Generated
+    faithfully from the official highrise-bot-sdk web-api client
+    (github.com/pocketzworld/python-bot-sdk, src/highrise/webapi.py) and the create.highrise.game
+    Web API reference. Highrise does not publish an OpenAPI document; this profiles the documented
+    surface only — no invented paths.
+  x-provenance:
+    generated: '2026-07-19'
+    method: generated
+    source: https://github.com/pocketzworld/python-bot-sdk/blob/main/src/highrise/webapi.py
+  x-apievangelist-note: >-
+    The Web API is read-only (GET). Single-resource endpoints return by id; collection endpoints
+    accept filter and pagination query parameters (starts_after cursor + limit).
+servers:
+- url: https://webapi.highrise.game
+  description: Highrise public Web API
+tags:
+- name: users
+- name: rooms
+- name: posts
+- name: items
+- name: grabs
+paths:
+  /users:
+    get:
+      tags: [users]
+      operationId: getUsers
+      summary: List public users
+      description: Returns a filtered, paginated collection of public users.
+      parameters:
+      - $ref: '#/components/parameters/StartsAfter'
+      - $ref: '#/components/parameters/SortOrder'
+      - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: A page of users.
+  /users/{user_id}:
+    get:
+      tags: [users]
+      operationId: getUser
+      summary: Get a public user
+      parameters:
+      - $ref: '#/components/parameters/UserId'
+      responses:
+        '200':
+          description: The user.
+        '404':
+          description: User not found.
+  /rooms:
+    get:
+      tags: [rooms]
+      operationId: getRooms
+      summary: List public rooms
+      parameters:
+      - $ref: '#/components/parameters/StartsAfter'
+      - $ref: '#/components/parameters/SortOrder'
+      - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: A page of rooms.
+  /rooms/{room_id}:
+    get:
+      tags: [rooms]
+      operationId: getRoom
+      summary: Get a public room
+      parameters:
+      - $ref: '#/components/parameters/RoomId'
+      responses:
+        '200':
+          description: The room.
+        '404':
+          description: Room not found.
+  /posts:
+    get:
+      tags: [posts]
+      operationId: getPosts
+      summary: List public posts
+      parameters:
+      - $ref: '#/components/parameters/StartsAfter'
+      - $ref: '#/components/parameters/SortOrder'
+      - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: A page of posts.
+  /posts/{post_id}:
+    get:
+      tags: [posts]
+      operationId: getPost
+      summary: Get a public post
+      parameters:
+      - $ref: '#/components/parameters/PostId'
+      responses:
+        '200':
+          description: The post.
+        '404':
+          description: Post not found.
+  /items:
+    get:
+      tags: [items]
+      operationId: getItems
+      summary: List public items
+      parameters:
+      - $ref: '#/components/parameters/StartsAfter'
+      - $ref: '#/components/parameters/SortOrder'
+      - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: A page of items.
+  /items/{item_id}:
+    get:
+      tags: [items]
+      operationId: getItem
+      summary: Get a public item
+      parameters:
+      - $ref: '#/components/parameters/ItemId'
+      responses:
+        '200':
+          description: The item.
+        '404':
+          description: Item not found.
+  /grabs:
+    get:
+      tags: [grabs]
+      operationId: getGrabs
+      summary: List public grabs
+      parameters:
+      - $ref: '#/components/parameters/StartsAfter'
+      - $ref: '#/components/parameters/SortOrder'
+      - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: A page of grabs.
+  /grabs/{grab_id}:
+    get:
+      tags: [grabs]
+      operationId: getGrab
+      summary: Get a public grab
+      parameters:
+      - $ref: '#/components/parameters/GrabId'
+      responses:
+        '200':
+          description: The grab.
+        '404':
+          description: Grab not found.
+components:
+  parameters:
+    UserId:
+      name: user_id
+      in: path
+      required: true
+      schema: {type: string}
+    RoomId:
+      name: room_id
+      in: path
+      required: true
+      schema: {type: string}
+    PostId:
+      name: post_id
+      in: path
+      required: true
+      schema: {type: string}
+    ItemId:
+      name: item_id
+      in: path
+      required: true
+      schema: {type: string}
+    GrabId:
+      name: grab_id
+      in: path
+      required: true
+      schema: {type: string}
+    StartsAfter:
+      name: starts_after
+      in: query
+      required: false
+      description: Cursor — return results after this id.
+      schema: {type: string}
+    SortOrder:
+      name: sort_order
+      in: query
+      required: false
+      schema: {type: string, enum: [asc, desc]}
+    Limit:
+      name: limit
+      in: query
+      required: false
+      schema: {type: integer, default: 20}

@@ -1,0 +1,20 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/highrise-web-api-openapi.yml
+format: unspecified
+note: >-
+  Highrise does not publish an RFC 9457 problem+json contract. Web API errors are HTTP status codes;
+  the Bot API surfaces errors as an `Error` message on the WebSocket (see SDK models.py `Error`).
+web_api_problems:
+- status: 404
+  title: Resource not found
+  applies_to: [getUser, getRoom, getPost, getItem, getGrab]
+  remediation: Verify the resource id exists and is public.
+bot_api_errors:
+- channel: error
+  type: Error
+  title: Bot API error
+  description: >-
+    The Bot API returns an Error message (with a human-readable message) when a request fails —
+    e.g. invalid token, missing room privilege, malformed request, or rate/permission denial.
+  source: https://github.com/pocketzworld/python-bot-sdk/blob/main/src/highrise/models.py

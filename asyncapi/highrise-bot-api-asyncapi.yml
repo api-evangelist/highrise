@@ -1,0 +1,133 @@
+asyncapi: 3.0.0
+info:
+  title: Highrise Bot API — Event Surface
+  version: '2026.04'
+  description: >-
+    Event surface of the Highrise Bot API, generated faithfully from the official highrise-bot-sdk
+    event model (github.com/pocketzworld/python-bot-sdk, src/highrise/models.py). Bots open a single
+    WebSocket and receive room events; they may subscribe to a subset via the `?events=` connection
+    query parameter. Highrise does not publish an AsyncAPI document — this captures the documented
+    events only, no invented channels.
+  x-provenance:
+    generated: '2026-07-19'
+    method: generated
+    source: https://github.com/pocketzworld/python-bot-sdk/blob/main/src/highrise/models.py
+defaultContentType: application/json
+servers:
+  botapi:
+    host: highrise.game
+    pathname: /web/botapi
+    protocol: wss
+    description: Highrise Bot API WebSocket. Authenticate with a per-bot API token bound to a room ID.
+channels:
+  chat:
+    address: chat
+    messages:
+      ChatEvent:
+        title: Chat message
+        description: A user sent a chat or whisper message in the room.
+  emote:
+    address: emote
+    messages:
+      EmoteEvent:
+        title: Emote
+        description: A user performed an emote.
+  reaction:
+    address: reaction
+    messages:
+      ReactionEvent:
+        title: Reaction
+        description: A user sent a reaction.
+  user_joined:
+    address: user_joined
+    messages:
+      UserJoinedEvent:
+        title: User joined
+        description: A user entered the room.
+  user_left:
+    address: user_left
+    messages:
+      UserLeftEvent:
+        title: User left
+        description: A user left the room.
+  user_moved:
+    address: user_moved
+    messages:
+      UserMovedEvent:
+        title: User moved
+        description: A user moved to a new position or anchor.
+  channel:
+    address: channel
+    messages:
+      ChannelEvent:
+        title: Channel message
+        description: A hidden channel (bot-to-bot / backend) message was received.
+  tip_reaction:
+    address: tip_reaction
+    messages:
+      TipReactionEvent:
+        title: Tip
+        description: A user tipped another user or the bot.
+  voice:
+    address: voice
+    messages:
+      VoiceEvent:
+        title: Voice change
+        description: Room voice-chat state changed (users speaking / seconds left).
+  message:
+    address: message
+    messages:
+      MessageEvent:
+        title: Direct message
+        description: The bot received a direct message / conversation event.
+  room_moderated:
+    address: room_moderated
+    messages:
+      RoomModeratedEvent:
+        title: Room moderated
+        description: A moderation action occurred in the room.
+operations:
+  onChat:
+    action: receive
+    channel:
+      $ref: '#/channels/chat'
+  onEmote:
+    action: receive
+    channel:
+      $ref: '#/channels/emote'
+  onReaction:
+    action: receive
+    channel:
+      $ref: '#/channels/reaction'
+  onUserJoined:
+    action: receive
+    channel:
+      $ref: '#/channels/user_joined'
+  onUserLeft:
+    action: receive
+    channel:
+      $ref: '#/channels/user_left'
+  onUserMoved:
+    action: receive
+    channel:
+      $ref: '#/channels/user_moved'
+  onChannel:
+    action: receive
+    channel:
+      $ref: '#/channels/channel'
+  onTipReaction:
+    action: receive
+    channel:
+      $ref: '#/channels/tip_reaction'
+  onVoice:
+    action: receive
+    channel:
+      $ref: '#/channels/voice'
+  onMessage:
+    action: receive
+    channel:
+      $ref: '#/channels/message'
+  onRoomModerated:
+    action: receive
+    channel:
+      $ref: '#/channels/room_moderated'

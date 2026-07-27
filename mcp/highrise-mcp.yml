@@ -1,0 +1,48 @@
+generated: '2026-07-19'
+method: derived
+status: candidate
+source: openapi/highrise-web-api-openapi.yml
+note: >-
+  No official Highrise MCP server was found (docs, npm @modelcontextprotocol, MCP registries). This
+  is a candidate tool list derived one-to-one from the read-only Web API operations, plus a few
+  marquee Bot API actions from the SDK. Not published by Highrise.
+server:
+  name: highrise
+  transport: http
+tools:
+- name: get_user
+  description: Get a public Highrise user by id.
+  source_operation: openapi/highrise-web-api-openapi.yml#getUser
+- name: list_users
+  description: List public Highrise users.
+  source_operation: openapi/highrise-web-api-openapi.yml#getUsers
+- name: get_room
+  description: Get a public Highrise room by id.
+  source_operation: openapi/highrise-web-api-openapi.yml#getRoom
+- name: list_rooms
+  description: List public Highrise rooms.
+  source_operation: openapi/highrise-web-api-openapi.yml#getRooms
+- name: get_post
+  description: Get a public Highrise post by id.
+  source_operation: openapi/highrise-web-api-openapi.yml#getPost
+- name: list_posts
+  description: List public Highrise posts.
+  source_operation: openapi/highrise-web-api-openapi.yml#getPosts
+- name: get_item
+  description: Get a public Highrise item by id.
+  source_operation: openapi/highrise-web-api-openapi.yml#getItem
+- name: list_items
+  description: List public Highrise items.
+  source_operation: openapi/highrise-web-api-openapi.yml#getItems
+- name: get_grab
+  description: Get a public Highrise grab by id.
+  source_operation: openapi/highrise-web-api-openapi.yml#getGrab
+- name: list_grabs
+  description: List public Highrise grabs.
+  source_operation: openapi/highrise-web-api-openapi.yml#getGrabs
+- name: send_chat
+  description: Send a chat message from the bot into its room (Bot API ChatRequest).
+  source_operation: asyncapi/highrise-bot-api-asyncapi.yml#ChatRequest
+- name: teleport_user
+  description: Teleport a user to a position in the room (Bot API TeleportRequest).
+  source_operation: asyncapi/highrise-bot-api-asyncapi.yml#TeleportRequest

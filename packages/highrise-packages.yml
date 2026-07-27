@@ -1,0 +1,29 @@
+generated: '2026-07-19'
+method: searched
+source: https://pypi.org/project/highrise-bot-sdk/
+packages:
+- language: python
+  registry: pypi
+  name: highrise-bot-sdk
+  url: https://pypi.org/project/highrise-bot-sdk/
+  install: pip install highrise-bot-sdk
+  version: 25.1.0
+  official: true
+  publisher: Pocket Worlds Inc
+  repo: https://github.com/pocketzworld/python-bot-sdk
+  license: Proprietary
+  description: >-
+    Official Python library for writing and running Highrise bots. Extend BaseBot, override event
+    handlers, and run with the bundled `highrise` CLI. Wraps the WebSocket Bot API and the read-only
+    Web API (self.webapi).
+- language: csharp
+  registry: github
+  name: highrise-net-sdk
+  url: https://github.com/pocketzworld/highrise-net-sdk
+  install: git clone https://github.com/pocketzworld/highrise-net-sdk
+  official: true
+  publisher: Pocket Worlds Inc
+  repo: https://github.com/pocketzworld/highrise-net-sdk
+  description: >-
+    Official .NET (C#) SDK for the Highrise API — avatar customization, item management and event
+    participation. Distributed as source on GitHub (no NuGet package published as of this pass).

@@ -1,0 +1,31 @@
+generated: '2026-07-19'
+method: searched
+source: https://pypi.org/project/highrise-bot-sdk/
+scheme: calver
+subject: highrise-bot-sdk (official Python Bot SDK)
+current_version: 25.1.0
+note: >-
+  Highrise publishes no dated developer-platform changelog page; the release history of the official
+  Bot SDK is the closest public signal. Recent PyPI releases below.
+entries:
+- version: 25.1.0
+  date: '2026-04-02'
+  breaking: false
+  highlights:
+  - Added support for media uploads by bots.
+  - Improved connection handling with automatic reconnection.
+- version: 24.1.0
+  date: '2024-05-31'
+  breaking: false
+  highlights:
+  - Maintenance release.
+- version: 23.3.4
+  date: '2023-09-01'
+  breaking: false
+  highlights:
+  - Bot SDK 23.3.x maintenance series.
+- version: 23.2.0
+  date: '2023-07-05'
+  breaking: false
+  highlights:
+  - First stable 23.x line after the 23.1.0 betas.

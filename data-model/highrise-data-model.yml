@@ -1,0 +1,51 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/highrise-web-api-openapi.yml
+note: >-
+  Entity graph derived from the Web API resources and the Bot SDK models
+  (github.com/pocketzworld/python-bot-sdk). Highrise ids are opaque strings (no documented prefixes).
+entities:
+- name: User
+  description: A Highrise player/avatar with an outfit and wallet.
+  endpoints: [getUser, getUsers]
+- name: Room
+  description: A social world/room users occupy; has an owner and permissions.
+  endpoints: [getRoom, getRooms]
+- name: Post
+  description: A social post authored by a user.
+  endpoints: [getPost, getPosts]
+- name: Item
+  description: A fashion/inventory item (clothing, accessories) that can be worn or traded.
+  endpoints: [getItem, getItems]
+- name: Grab
+  description: A grab (giveaway/collectible drop) users can claim.
+  endpoints: [getGrab, getGrabs]
+- name: Conversation
+  description: A direct-message thread (Bot API).
+- name: CurrencyItem
+  description: A wallet balance entry (e.g. gold/bubbles) held by a user.
+relationships:
+- from: Room
+  to: User
+  type: belongs_to
+  via: owner
+- from: Post
+  to: User
+  type: belongs_to
+  via: author
+- from: User
+  to: Item
+  type: has_many
+  via: inventory
+- from: User
+  to: CurrencyItem
+  type: has_many
+  via: wallet
+- from: Grab
+  to: Item
+  type: has_one
+  via: item
+- from: Conversation
+  to: User
+  type: has_many
+  via: members

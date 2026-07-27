@@ -1,0 +1,12 @@
+generated: '2026-07-19'
+method: generated
+source: openapi/highrise-web-api-openapi.yml, asyncapi/highrise-bot-api-asyncapi.yml
+skills:
+- file: highrise-lookup-public-data.md
+  name: Look up public Highrise data
+  api: openapi/highrise-web-api-openapi.yml
+  operations: [getUser, getUsers, getRoom, getRooms, getItem, getItems, getPost, getGrab]
+- file: highrise-run-a-room-bot.md
+  name: Run a bot inside a Highrise room
+  api: asyncapi/highrise-bot-api-asyncapi.yml
+  operations: [onChat, onUserJoined, onTipReaction]

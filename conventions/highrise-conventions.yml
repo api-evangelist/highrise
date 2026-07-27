@@ -1,0 +1,48 @@
+generated: '2026-07-19'
+method: searched
+source: https://github.com/pocketzworld/python-bot-sdk
+docs: https://create.highrise.game/learn/guides/bots/creating-a-bot
+authentication:
+  style: static-api-token
+  detail: >-
+    Per-bot API token from account settings, bound to a room ID. See
+    authentication/highrise-authentication.yml.
+transport:
+  bot_api: WebSocket (wss://highrise.game/web/botapi)
+  web_api: REST over HTTPS (https://webapi.highrise.game)
+request_correlation:
+  supported: true
+  mechanism: >-
+    Bot API request messages carry a client-generated request id (`rid`); the server echoes it on
+    the matching response so an agent can pair replies with in-flight requests over the single
+    WebSocket. This is correlation, not HTTP idempotency-key replay protection.
+idempotency:
+  supported: false
+  note: >-
+    No documented idempotency-key header. Web API is read-only (GET) and thus naturally idempotent;
+    Bot API mutations are fire-and-forget request messages correlated by `rid`.
+pagination:
+  style: cursor
+  params: [starts_after, sort_order, limit]
+  detail: >-
+    Web API collection endpoints (users, rooms, posts, items, grabs) accept a `starts_after` cursor,
+    `sort_order`, and `limit`.
+events:
+  style: push
+  detail: >-
+    Bot API delivers room events over the WebSocket (chat, emote, reaction, user joined/left, user
+    moved, tip reaction, voice, DM message, room moderated). A bot may subscribe to a subset via the
+    connection `?events=` query parameter. See asyncapi/highrise-bot-api-asyncapi.yml.
+error_envelope:
+  detail: >-
+    Bot API surfaces errors via an Error message on the socket. See errors/highrise-problem-types.yml.
+rate_limit_signaling:
+  documented: false
+versioning:
+  scheme: sdk-calendar
+  detail: >-
+    The SDK is versioned CalVer (e.g. 25.1.0). The wire protocol is unversioned in path.
+cross_links:
+  authentication: authentication/highrise-authentication.yml
+  errors: errors/highrise-problem-types.yml
+  lifecycle: lifecycle/highrise-lifecycle.yml

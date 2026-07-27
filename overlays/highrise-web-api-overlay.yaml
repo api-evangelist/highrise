@@ -1,0 +1,25 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Highrise Web API
+  version: 1.0.0
+extends: openapi/highrise-web-api-openapi.yml
+actions:
+- target: $.info
+  update:
+    x-apievangelist-rating: 3
+    x-apievangelist-note: >-
+      Read-only public-data API profiled from the official Highrise Bot SDK web-api client. Highrise
+      publishes no OpenAPI; this overlay records our enhancements over the generated spec.
+- target: $.info
+  update:
+    x-authentication: authentication/highrise-authentication.yml
+    x-conventions: conventions/highrise-conventions.yml
+    x-data-model: data-model/highrise-data-model.yml
+- target: $.tags
+  update:
+  - name: users
+    description: Public Highrise users.
+  - name: rooms
+    description: Public Highrise rooms.
+  - name: items
+    description: Public Highrise fashion/inventory items.

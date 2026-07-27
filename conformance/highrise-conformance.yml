@@ -1,0 +1,24 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/highrise-web-api-openapi.yml
+standards:
+- id: oauth2
+  conforms: false
+  evidence: Auth is a static per-bot API token, not OAuth2.
+- id: oidc
+  conforms: false
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: No application/problem+json contract published.
+- id: rest-json
+  conforms: true
+  evidence: Web API is JSON over HTTPS with resource-oriented GET endpoints.
+- id: cursor-pagination
+  conforms: true
+  evidence: Collection endpoints use starts_after cursor + limit + sort_order.
+- id: asyncapi-events
+  conforms: true
+  evidence: Bot API is an event-driven WebSocket surface (captured as AsyncAPI 3.0.0).
+- id: websocket
+  conforms: true
+  evidence: Bot API transport is WebSocket (wss://highrise.game/web/botapi).

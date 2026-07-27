@@ -1,0 +1,16 @@
+generated: '2026-07-19'
+method: searched
+source: https://github.com/pocketzworld/python-bot-sdk
+name: highrise
+description: >-
+  The `highrise` command ships with the official highrise-bot-sdk. It runs a bot class against a
+  room using an API token, opening the Bot API WebSocket connection for you.
+install:
+- method: pip
+  command: pip install highrise-bot-sdk
+usage: highrise <module>:<BotClass> <room_id> <api_token>
+example: highrise mybot:Bot abc123roomid your_api_token
+notes: >-
+  The bot class extends BaseBot and overrides event handlers (on_user_join, on_message, on_chat,
+  on_user_move, on_voice_change, on_moderate, before_start, ...). Binary is catalogued in
+  packages/highrise-packages.yml (highrise-bot-sdk).

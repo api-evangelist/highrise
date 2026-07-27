@@ -1,0 +1,23 @@
+generated: '2026-07-19'
+method: searched
+source: https://github.com/pocketzworld/python-bot-sdk
+versioning:
+  scheme: calver-sdk
+  current: 25.1.0
+  detail: >-
+    Versioning is expressed through the SDK (CalVer, e.g. 25.1.0). The Bot API WebSocket path and Web
+    API paths are unversioned. Protocol changes ship as new SDK releases.
+  docs: https://pypi.org/project/highrise-bot-sdk/
+deprecation:
+  policy_url: null
+  sunset_header: false
+  note: No published deprecation policy or RFC 8594 Sunset/Deprecation header support found.
+sla:
+  url: null
+  uptime_target: null
+status_page:
+  url: null
+  note: >-
+    status.highrise.game exists but 302-redirects to the main site — no dedicated status/uptime page
+    is published.
+deprecated_operations: []

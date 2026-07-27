@@ -1,22 +1,199 @@
 aid: highrise
 name: Highrise
-description: Highrise is a company surfaced as a portfolio company of canaan-partners and added to the
-  API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: >-
+  Highrise is a mobile-first virtual world by Pocket Worlds Inc where users create avatars, hang
+  out in social rooms, design and trade fashion items, and build custom worlds. Alongside the
+  consumer app, Highrise operates a developer platform for creators: a WebSocket Bot API for
+  running programmable bots inside rooms (official Python and .NET SDKs), a read-only REST Web API
+  exposing public users, rooms, posts, items and grabs data, and Highrise Studio with an Engine API
+  and Cloud API for scripting worlds and games in Lua. Bots authenticate with an API token minted
+  from the Highrise account settings and are bound to a room ID.
 url: https://raw.githubusercontent.com/api-evangelist/highrise/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - canaan-partners
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier: profiled
+x-tier-reason: enriched-from-provider-surface
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://highrise.game/assets/images/highrise-meta.png
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-19'
 tags:
 - Company
-apis: []
+- Virtual World
+- Metaverse
+- Social
+- Gaming
+- Avatars
+- Bots
+- Developer Platform
+- Chat
+apis:
+- name: Highrise Bot API
+  description: >-
+    WebSocket API for building and running programmable bots inside Highrise rooms. Bots receive a stream
+    of room events (chat, emotes, reactions, joins/leaves, movement, tips, voice, DMs, moderation) and
+    issue request messages (chat, teleport, moderate, tip, manage voice, buy items, manage backpack/outfit,
+    send messages). Official Python and .NET SDKs wrap the protocol.
+  humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
+  baseURL: wss://highrise.game/web/botapi
+  tags:
+  - Bots
+  - WebSocket
+  - Events
+  - Real-time
+  properties:
+  - type: AsyncAPI
+    url: asyncapi/highrise-bot-api-asyncapi.yml
+  - type: Webhooks
+    url: asyncapi/highrise-bot-api-asyncapi.yml
+- name: Highrise Studio (Engine + Cloud API)
+  description: >-
+    Highrise Studio is the world-building toolset. Its Engine API and Cloud API let creators script custom
+    worlds, games and experiences in Lua with deep customization of the Highrise runtime.
+  humanURL: https://create.highrise.game
+  baseURL: https://create.highrise.game
+  tags:
+  - Lua
+  - Game Engine
+  - World Building
+- aid: highrise:highrise-grabs-api
+  name: Highrise grabs API
+  description: The grabs API from Highrise — 2 operation(s) for grabs.
+  humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
+  baseURL: wss://highrise.game/web/botapi
+  tags:
+  - grabs
+  properties:
+  - type: OpenAPI
+    url: openapi/highrise-grabs-api-openapi.yml
+  - type: DataModel
+    url: data-model/highrise-data-model.yml
+- aid: highrise:highrise-items-api
+  name: Highrise items API
+  description: The items API from Highrise — 2 operation(s) for items.
+  humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
+  baseURL: wss://highrise.game/web/botapi
+  tags:
+  - items
+  properties:
+  - type: OpenAPI
+    url: openapi/highrise-items-api-openapi.yml
+  - type: DataModel
+    url: data-model/highrise-data-model.yml
+- aid: highrise:highrise-posts-api
+  name: Highrise posts API
+  description: The posts API from Highrise — 2 operation(s) for posts.
+  humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
+  baseURL: wss://highrise.game/web/botapi
+  tags:
+  - posts
+  properties:
+  - type: OpenAPI
+    url: openapi/highrise-posts-api-openapi.yml
+  - type: DataModel
+    url: data-model/highrise-data-model.yml
+- aid: highrise:highrise-rooms-api
+  name: Highrise rooms API
+  description: The rooms API from Highrise — 2 operation(s) for rooms.
+  humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
+  baseURL: wss://highrise.game/web/botapi
+  tags:
+  - rooms
+  properties:
+  - type: OpenAPI
+    url: openapi/highrise-rooms-api-openapi.yml
+  - type: DataModel
+    url: data-model/highrise-data-model.yml
+- aid: highrise:highrise-users-api
+  name: Highrise users API
+  description: The users API from Highrise — 2 operation(s) for users.
+  humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
+  baseURL: wss://highrise.game/web/botapi
+  tags:
+  - users
+  properties:
+  - type: OpenAPI
+    url: openapi/highrise-users-api-openapi.yml
+  - type: DataModel
+    url: data-model/highrise-data-model.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+common:
+- type: Website
+  url: https://highrise.game
+- type: DeveloperPortal
+  url: https://create.highrise.game
+- type: Documentation
+  url: https://create.highrise.game/learn
+- type: APIReference
+  url: https://create.highrise.game/learn
+- type: GettingStarted
+  url: https://create.highrise.game/learn/guides/bots/creating-a-bot
+- type: Support
+  url: https://support.highrise.game
+- type: GitHubOrganization
+  url: https://github.com/pocketzworld
+- type: TermsOfService
+  url: https://highrise.game/terms-of-service
+- type: PrivacyPolicy
+  url: https://highrise.game/privacy-policy
+- type: Login
+  url: https://highrise.game/account/settings
+- type: Partnerships
+  url: https://create.highrise.game/partnerships
+- type: Packages
+  url: packages/highrise-packages.yml
+- type: SDKs
+  url: packages/highrise-packages.yml
+- type: CLI
+  url: cli/highrise-cli.yml
+- type: Authentication
+  url: authentication/highrise-authentication.yml
+- type: Conventions
+  url: conventions/highrise-conventions.yml
+- type: ErrorCatalog
+  url: errors/highrise-problem-types.yml
+- type: DataModel
+  url: data-model/highrise-data-model.yml
+- type: Conformance
+  url: conformance/highrise-conformance.yml
+- type: Lifecycle
+  url: lifecycle/highrise-lifecycle.yml
+- type: ChangeLog
+  url: changelog/highrise-changelog.yml
+- type: MCPServer
+  url: mcp/highrise-mcp.yml
+- type: LLMsTxt
+  url: llms/highrise-llms.txt
+- type: WellKnown
+  url: well-known/highrise-well-known.yml
+- type: DomainSecurity
+  url: security/highrise-domain-security.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Overlay
+  url: overlays/highrise-web-api-overlay.yaml
+- type: Webhooks
+  url: asyncapi/highrise-bot-api-asyncapi.yml
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence
