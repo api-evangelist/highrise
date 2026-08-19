@@ -1,0 +1,65 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Highrise Web grabs items API",
+    "version": "2026.04"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "items",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List public items",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://webapi.highrise.game/items",
+            "params": [
+              {
+                "name": "starts_after",
+                "value": "",
+                "type": "query",
+                "description": "Cursor — return results after this id."
+              },
+              {
+                "name": "sort_order",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List public items"
+        },
+        {
+          "info": {
+            "name": "Get a public item",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://webapi.highrise.game/items/:item_id",
+            "params": [
+              {
+                "name": "item_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a public item"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

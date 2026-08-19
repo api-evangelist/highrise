@@ -1,0 +1,65 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Highrise Web grabs users API",
+    "version": "2026.04"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List public users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://webapi.highrise.game/users",
+            "params": [
+              {
+                "name": "starts_after",
+                "value": "",
+                "type": "query",
+                "description": "Cursor — return results after this id."
+              },
+              {
+                "name": "sort_order",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns a filtered, paginated collection of public users."
+        },
+        {
+          "info": {
+            "name": "Get a public user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://webapi.highrise.game/users/:user_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a public user"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

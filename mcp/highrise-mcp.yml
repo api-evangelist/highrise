@@ -2,10 +2,9 @@ generated: '2026-07-19'
 method: derived
 status: candidate
 source: openapi/highrise-web-api-openapi.yml
-note: >-
-  No official Highrise MCP server was found (docs, npm @modelcontextprotocol, MCP registries). This
-  is a candidate tool list derived one-to-one from the read-only Web API operations, plus a few
-  marquee Bot API actions from the SDK. Not published by Highrise.
+note: No official Highrise MCP server was found (docs, npm @modelcontextprotocol, MCP registries). This
+  is a candidate tool list derived one-to-one from the read-only Web API operations, plus a few marquee
+  Bot API actions from the SDK. Not published by Highrise.
 server:
   name: highrise
   transport: http
@@ -46,3 +45,9 @@ tools:
 - name: teleport_user
   description: Teleport a user to a position in the room (Bot API TeleportRequest).
   source_operation: asyncapi/highrise-bot-api-asyncapi.yml#TeleportRequest
+deployment:
+  mode: none
+  verified: derived
+  tools: 12
+  checked: '2026-08-12'
+  source: catalog MCP census

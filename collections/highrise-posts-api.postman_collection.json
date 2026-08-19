@@ -1,0 +1,228 @@
+{
+  "item": [
+    {
+      "id": "2b038ad1-4367-4ae5-aecf-d48bc7c17830",
+      "name": "posts",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d95006a3-2cb0-4c20-9407-b17989a05c3a",
+          "name": "List public posts",
+          "request": {
+            "name": "List public posts",
+            "description": {},
+            "url": {
+              "path": [
+                "posts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "starts_after",
+                  "value": "<string>",
+                  "description": "Cursor — return results after this id."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_order",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "20"
+                }
+              ],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ce3ed8a0-7f2d-46a3-b7f7-c77b6a9b3e17",
+              "name": "A page of posts.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "posts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "starts_after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a1b4544d-041d-47e1-9e27-87b2f7360e8f",
+          "name": "Get a public post",
+          "request": {
+            "name": "Get a public post",
+            "description": {},
+            "url": {
+              "path": [
+                "posts",
+                ":post_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "post_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8f60d05a-d523-4c66-bdce-9c99283cd0a4",
+              "name": "The post.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "posts",
+                    ":post_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "post_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9d5aa9c2-d4b0-46fb-89e2-dff1a8a1dc5a",
+              "name": "Post not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "posts",
+                    ":post_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "post_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://webapi.highrise.game",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "78f37e20-468a-4bfd-9693-e5e7f676cb46",
+    "name": "Highrise Web grabs posts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Read-only REST API for public Highrise data (users, rooms, posts, items, grabs). Generated faithfully from the official highrise-bot-sdk web-api client (github.com/pocketzworld/python-bot-sdk, src/highrise/webapi.py) and the create.highrise.game Web API reference. Highrise does not publish an OpenAPI document; this profiles the documented surface only — no invented paths.",
+      "type": "text/plain"
+    }
+  }
+}

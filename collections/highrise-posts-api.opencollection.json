@@ -1,0 +1,65 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Highrise Web grabs posts API",
+    "version": "2026.04"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "posts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List public posts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://webapi.highrise.game/posts",
+            "params": [
+              {
+                "name": "starts_after",
+                "value": "",
+                "type": "query",
+                "description": "Cursor — return results after this id."
+              },
+              {
+                "name": "sort_order",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List public posts"
+        },
+        {
+          "info": {
+            "name": "Get a public post",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://webapi.highrise.game/posts/:post_id",
+            "params": [
+              {
+                "name": "post_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a public post"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

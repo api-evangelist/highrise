@@ -1,0 +1,228 @@
+{
+  "item": [
+    {
+      "id": "3a28822f-d638-4b24-8b67-dae49fd94b65",
+      "name": "grabs",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4fb88710-9cee-45f9-ad35-99482639035d",
+          "name": "List public grabs",
+          "request": {
+            "name": "List public grabs",
+            "description": {},
+            "url": {
+              "path": [
+                "grabs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "starts_after",
+                  "value": "<string>",
+                  "description": "Cursor — return results after this id."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_order",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "20"
+                }
+              ],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "99d7dec0-9ff7-4cf8-b1d7-ec07a5135a73",
+              "name": "A page of grabs.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "grabs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "starts_after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bdbecdc2-e7a3-44dd-adfd-69903608ea93",
+          "name": "Get a public grab",
+          "request": {
+            "name": "Get a public grab",
+            "description": {},
+            "url": {
+              "path": [
+                "grabs",
+                ":grab_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "grab_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a5123e71-1bfa-4a86-aa15-2da6dfef6234",
+              "name": "The grab.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "grabs",
+                    ":grab_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "grab_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f91069b3-cf46-4caf-a8de-9b82688fd383",
+              "name": "Grab not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "grabs",
+                    ":grab_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "grab_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://webapi.highrise.game",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "ddaafa26-d50b-433b-aa5d-7b40eb5d529e",
+    "name": "Highrise Web grabs API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Read-only REST API for public Highrise data (users, rooms, posts, items, grabs). Generated faithfully from the official highrise-bot-sdk web-api client (github.com/pocketzworld/python-bot-sdk, src/highrise/webapi.py) and the create.highrise.game Web API reference. Highrise does not publish an OpenAPI document; this profiles the documented surface only — no invented paths.",
+      "type": "text/plain"
+    }
+  }
+}
