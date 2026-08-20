@@ -53,6 +53,11 @@ apis:
   tags:
   - Bots
   - WebSocket
+  - Event
+  - Real-Time
+  tags_raw:
+  - Bots
+  - WebSocket
   - Events
   - Real-time
   properties:
@@ -88,6 +93,8 @@ apis:
   humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
   baseURL: wss://highrise.game/web/botapi
   tags:
+  - Item
+  tags_raw:
   - items
   properties:
   - type: OpenAPI
@@ -100,6 +107,8 @@ apis:
   humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
   baseURL: wss://highrise.game/web/botapi
   tags:
+  - Posts
+  tags_raw:
   - posts
   properties:
   - type: OpenAPI
@@ -112,6 +121,8 @@ apis:
   humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
   baseURL: wss://highrise.game/web/botapi
   tags:
+  - Rooms
+  tags_raw:
   - rooms
   properties:
   - type: OpenAPI
@@ -124,6 +135,8 @@ apis:
   humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
   baseURL: wss://highrise.game/web/botapi
   tags:
+  - User
+  tags_raw:
   - users
   properties:
   - type: OpenAPI
