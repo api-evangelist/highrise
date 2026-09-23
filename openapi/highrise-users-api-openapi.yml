@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Highrise Web grabs users API
+  title: Highrise Web Users API
   version: '2026.04'
   description: Read-only REST API for public Highrise data (users, rooms, posts, items, grabs). Generated faithfully from the official highrise-bot-sdk web-api client (github.com/pocketzworld/python-bot-sdk, src/highrise/webapi.py) and the create.highrise.game Web API reference. Highrise does not publish an OpenAPI document; this profiles the documented surface only — no invented paths.
   x-provenance:
@@ -12,12 +12,12 @@ servers:
 - url: https://webapi.highrise.game
   description: Highrise public Web API
 tags:
-- name: users
+- name: Users
 paths:
   /users:
     get:
       tags:
-      - users
+      - Users
       operationId: getUsers
       summary: List public users
       description: Returns a filtered, paginated collection of public users.
@@ -31,7 +31,7 @@ paths:
   /users/{user_id}:
     get:
       tags:
-      - users
+      - Users
       operationId: getUser
       summary: Get a public user
       parameters:
@@ -56,6 +56,13 @@ components:
       required: true
       schema:
         type: string
+    StartsAfter:
+      name: starts_after
+      in: query
+      required: false
+      description: Cursor — return results after this id.
+      schema:
+        type: string
     SortOrder:
       name: sort_order
       in: query
@@ -65,10 +72,3 @@ components:
         enum:
         - asc
         - desc
-    StartsAfter:
-      name: starts_after
-      in: query
-      required: false
-      description: Cursor — return results after this id.
-      schema:
-        type: string
