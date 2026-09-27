@@ -54,6 +54,7 @@ tags:
 - Bots
 - Developer Platform
 - Chat
+- Real-Time
 apis:
 - name: Highrise Bot API
   description: >-
@@ -89,7 +90,7 @@ apis:
   - Game Engine
   - World Building
 - aid: highrise:highrise-grabs-api
-  name: Highrise grabs API
+  name: Highrise Grabs API
   description: The grabs API from Highrise — 2 operation(s) for grabs.
   humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
   baseURL: wss://highrise.game/web/botapi
@@ -101,7 +102,7 @@ apis:
   - type: DataModel
     url: data-model/highrise-data-model.yml
 - aid: highrise:highrise-items-api
-  name: Highrise items API
+  name: Highrise Items API
   description: The items API from Highrise — 2 operation(s) for items.
   humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
   baseURL: wss://highrise.game/web/botapi
@@ -115,7 +116,7 @@ apis:
   - type: DataModel
     url: data-model/highrise-data-model.yml
 - aid: highrise:highrise-posts-api
-  name: Highrise posts API
+  name: Highrise Posts API
   description: The posts API from Highrise — 2 operation(s) for posts.
   humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
   baseURL: wss://highrise.game/web/botapi
@@ -129,7 +130,7 @@ apis:
   - type: DataModel
     url: data-model/highrise-data-model.yml
 - aid: highrise:highrise-rooms-api
-  name: Highrise rooms API
+  name: Highrise Rooms API
   description: The rooms API from Highrise — 2 operation(s) for rooms.
   humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
   baseURL: wss://highrise.game/web/botapi
@@ -143,7 +144,7 @@ apis:
   - type: DataModel
     url: data-model/highrise-data-model.yml
 - aid: highrise:highrise-users-api
-  name: Highrise users API
+  name: Highrise Users API
   description: The users API from Highrise — 2 operation(s) for users.
   humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
   baseURL: wss://highrise.game/web/botapi
