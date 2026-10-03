@@ -42,6 +42,19 @@ paths:
           description: Grab not found.
 components:
   parameters:
+    GrabId:
+      name: grab_id
+      in: path
+      required: true
+      schema:
+        type: string
+    Limit:
+      name: limit
+      in: query
+      required: false
+      schema:
+        type: integer
+        default: 20
     SortOrder:
       name: sort_order
       in: query
@@ -58,16 +71,3 @@ components:
       description: Cursor — return results after this id.
       schema:
         type: string
-    GrabId:
-      name: grab_id
-      in: path
-      required: true
-      schema:
-        type: string
-    Limit:
-      name: limit
-      in: query
-      required: false
-      schema:
-        type: integer
-        default: 20
