@@ -42,13 +42,6 @@ paths:
           description: Room not found.
 components:
   parameters:
-    Limit:
-      name: limit
-      in: query
-      required: false
-      schema:
-        type: integer
-        default: 20
     SortOrder:
       name: sort_order
       in: query
@@ -58,6 +51,12 @@ components:
         enum:
         - asc
         - desc
+    RoomId:
+      name: room_id
+      in: path
+      required: true
+      schema:
+        type: string
     StartsAfter:
       name: starts_after
       in: query
@@ -65,9 +64,10 @@ components:
       description: Cursor — return results after this id.
       schema:
         type: string
-    RoomId:
-      name: room_id
-      in: path
-      required: true
+    Limit:
+      name: limit
+      in: query
+      required: false
       schema:
-        type: string
+        type: integer
+        default: 20
