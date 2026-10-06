@@ -43,7 +43,7 @@ accessModel:
 image: https://highrise.game/assets/images/highrise-meta.png
 specificationVersion: '0.23'
 created: '2026-07-17'
-modified: '2026-07-19'
+modified: '2026-10-06'
 tags:
 - Company
 - Virtual World
@@ -163,6 +163,8 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- url: https://highrise.game/news
+  type: Blog
 - type: Website
   url: https://highrise.game
 - type: DeveloperPortal
