@@ -93,7 +93,7 @@ apis:
   name: Highrise Grabs API
   description: The grabs API from Highrise — 2 operation(s) for grabs.
   humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
-  baseURL: wss://highrise.game/web/botapi
+  baseURL: https://webapi.highrise.game
   tags:
   - grabs
   properties:
@@ -105,7 +105,7 @@ apis:
   name: Highrise Items API
   description: The items API from Highrise — 2 operation(s) for items.
   humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
-  baseURL: wss://highrise.game/web/botapi
+  baseURL: https://webapi.highrise.game
   tags:
   - Item
   tags_raw:
@@ -119,7 +119,7 @@ apis:
   name: Highrise Posts API
   description: The posts API from Highrise — 2 operation(s) for posts.
   humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
-  baseURL: wss://highrise.game/web/botapi
+  baseURL: https://webapi.highrise.game
   tags:
   - Posts
   tags_raw:
@@ -133,7 +133,7 @@ apis:
   name: Highrise Rooms API
   description: The rooms API from Highrise — 2 operation(s) for rooms.
   humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
-  baseURL: wss://highrise.game/web/botapi
+  baseURL: https://webapi.highrise.game
   tags:
   - Rooms
   tags_raw:
@@ -147,7 +147,7 @@ apis:
   name: Highrise Users API
   description: The users API from Highrise — 2 operation(s) for users.
   humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
-  baseURL: wss://highrise.game/web/botapi
+  baseURL: https://webapi.highrise.game
   tags:
   - User
   tags_raw:
