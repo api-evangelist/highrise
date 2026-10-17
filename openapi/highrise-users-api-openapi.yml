@@ -43,15 +43,6 @@ paths:
           description: User not found.
 components:
   parameters:
-    SortOrder:
-      name: sort_order
-      in: query
-      required: false
-      schema:
-        type: string
-        enum:
-        - asc
-        - desc
     StartsAfter:
       name: starts_after
       in: query
@@ -65,6 +56,15 @@ components:
       required: true
       schema:
         type: string
+    SortOrder:
+      name: sort_order
+      in: query
+      required: false
+      schema:
+        type: string
+        enum:
+        - asc
+        - desc
     Limit:
       name: limit
       in: query

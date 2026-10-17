@@ -42,6 +42,13 @@ paths:
           description: Grab not found.
 components:
   parameters:
+    StartsAfter:
+      name: starts_after
+      in: query
+      required: false
+      description: Cursor — return results after this id.
+      schema:
+        type: string
     SortOrder:
       name: sort_order
       in: query
@@ -51,13 +58,6 @@ components:
         enum:
         - asc
         - desc
-    StartsAfter:
-      name: starts_after
-      in: query
-      required: false
-      description: Cursor — return results after this id.
-      schema:
-        type: string
     GrabId:
       name: grab_id
       in: path
