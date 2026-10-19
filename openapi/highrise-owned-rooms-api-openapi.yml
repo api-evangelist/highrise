@@ -1,0 +1,281 @@
+openapi: 3.2.0
+info:
+  title: Create Owned Rooms API
+  version: '1.0'
+tags:
+- name: owned_rooms
+paths:
+  /api/worlds/{world_id}/owned_rooms:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Table_OwnedRoom'
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: is_expired
+        in: query
+        schema:
+          type: string
+      - name: owner_id
+        in: query
+        schema:
+          type: string
+      - name: page
+        in: query
+        schema:
+          type: string
+      summary: Get Owned Rooms
+      tags:
+      - owned_rooms
+      operationId: get_owned_rooms
+    delete:
+      responses:
+        '200':
+          description: No content
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: owner_ids
+        in: query
+        schema:
+          type: string
+      - name: owned_room_ids
+        in: query
+        schema:
+          type: string
+      summary: Expire Owned Rooms
+      tags:
+      - owned_rooms
+      operationId: expire_owned_rooms
+  /api/worlds/{world_id}/owned_rooms-analytics/stats:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetOwnedRoomSubStatsResponse'
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      - name: aggregation_start_date_time
+        in: query
+        schema:
+          type: string
+      - name: aggregation_end_date_time
+        in: query
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Get Owned Room Sub Stats
+      tags:
+      - owned_rooms
+      operationId: get_owned_room_sub_stats
+  /api/worlds/{world_id}/owned_rooms-analytics/all:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetOwnedRoomSubAnalyticsResponse'
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: aggregation_start_date_time
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: aggregation_end_date_time
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Get Owned Room Sub Analytics
+      tags:
+      - owned_rooms
+      operationId: get_owned_room_sub_analytics
+components:
+  schemas:
+    GetOwnedRoomSubStatsResponse:
+      type: object
+      properties:
+        total_sales:
+          type: integer
+        total_net_revenue:
+          type: integer
+      required:
+      - total_sales
+      - total_net_revenue
+    Table_OwnedRoom:
+      type: object
+      properties:
+        elements:
+          items:
+            $ref: '#/components/schemas/OwnedRoom'
+          type: array
+        total:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+      required:
+      - elements
+      - total
+      - limit
+      - offset
+    Analytic:
+      type: object
+      properties:
+        net_revnue:
+          type: integer
+      required:
+      - net_revnue
+    ContentAccess2:
+      type: object
+      properties:
+        is_18plus:
+          type: boolean
+        password:
+          oneOf:
+          - type: string
+          - type: 'null'
+    Access:
+      type: object
+      properties:
+        all:
+          type: boolean
+        friends:
+          type: boolean
+        followers:
+          type: boolean
+        crew:
+          type: boolean
+    OwnedRoom:
+      type: object
+      properties:
+        title:
+          type: string
+        max_users:
+          type: integer
+        description:
+          oneOf:
+          - type: string
+          - type: 'null'
+        description_language:
+          oneOf:
+          - type: string
+          - type: 'null'
+        price_paid:
+          type: integer
+        auto_renew:
+          type: boolean
+        access:
+          $ref: '#/components/schemas/Access'
+        locale:
+          type: string
+        moderator_ids:
+          type: string
+        is_expired:
+          type: boolean
+        count:
+          $ref: '#/components/schemas/Counters2'
+        voice_until:
+          oneOf:
+          - type: 'null'
+        managed:
+          oneOf:
+          - $ref: '#/components/schemas/ManagedRoom'
+          - type: 'null'
+        category:
+          oneOf:
+          - type: string
+          - type: 'null'
+        content_access:
+          $ref: '#/components/schemas/ContentAccess2'
+        pinned_at:
+          oneOf:
+          - type: 'null'
+        icon_url:
+          oneOf:
+          - type: string
+          - type: 'null'
+        thumbnail_icon_url:
+          oneOf:
+          - type: string
+          - type: 'null'
+      required:
+      - title
+      - max_users
+    GetOwnedRoomSubAnalyticsResponse:
+      type: object
+      properties:
+        granularity:
+          type: string
+        analytics:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Analytic'
+      required:
+      - granularity
+      - analytics
+    ManagedRoom:
+      type: object
+      properties:
+        designer_ids:
+          items:
+            type: string
+          type: array
+        is_home_room:
+          type: boolean
+        crew_id:
+          oneOf:
+          - type: 'null'
+    Counters2:
+      type: object
+      properties:
+        visits:
+          type: integer
+        active_players:
+          type: integer
+        active_last_update:
+          oneOf:
+          - type: 'null'
+  securitySchemes:
+    cookie_hr_s_production:
+      name: hr_s_production
+      in: cookie
+      description: null
+      type: apiKey

@@ -1,0 +1,154 @@
+openapi: 3.2.0
+info:
+  title: Create Leaderboard API
+  version: '1.0'
+tags:
+- name: Leaderboard
+paths:
+  /api/leaderboard:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Table_LeaderboardEntry'
+      parameters:
+      - name: aggregation_start_date_time
+        in: query
+        schema:
+          type: string
+      - name: type
+        in: query
+        schema:
+          type: string
+      - name: limit
+        in: query
+        schema:
+          type: integer
+      - name: offset
+        in: query
+        schema:
+          type: integer
+      summary: Get Creator Weekly Leaderboard
+      tags:
+      - Leaderboard
+      operationId: get_creator_weekly_leaderboard
+  /api/leaderboard/history:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Table_LeaderboardHistoricResponse'
+      parameters:
+      - name: limit
+        in: query
+        schema:
+          type: integer
+      - name: offset
+        in: query
+        schema:
+          type: integer
+      - name: page
+        in: query
+        schema:
+          type: integer
+      summary: Get Creator Historic Leaderboard
+      tags:
+      - Leaderboard
+      operationId: get_creator_historic_leaderboard
+components:
+  schemas:
+    Table_LeaderboardHistoricResponse:
+      type: object
+      properties:
+        elements:
+          items:
+            $ref: '#/components/schemas/LeaderboardHistoricResponse'
+          type: array
+        total:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+      required:
+      - elements
+      - total
+      - limit
+      - offset
+    LeaderboardHistoricEntry:
+      type: object
+      properties:
+        world_id:
+          type: string
+        icon_url:
+          type: string
+      required:
+      - world_id
+      - icon_url
+    Table_LeaderboardEntry:
+      type: object
+      properties:
+        elements:
+          items:
+            $ref: '#/components/schemas/LeaderboardEntry'
+          type: array
+        total:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+      required:
+      - elements
+      - total
+      - limit
+      - offset
+    LeaderboardHistoricResponse:
+      type: object
+      properties:
+        top_engagement:
+          items:
+            $ref: '#/components/schemas/LeaderboardHistoricEntry'
+          type: array
+        top_grossing:
+          items:
+            $ref: '#/components/schemas/LeaderboardHistoricEntry'
+          type: array
+      required:
+      - top_engagement
+      - top_grossing
+    LeaderboardEntry:
+      type: object
+      properties:
+        world_id:
+          type: string
+        name:
+          type: string
+        icon_url:
+          type: string
+        image_urls:
+          items:
+            type: string
+          type: array
+        rank:
+          oneOf:
+          - type: integer
+          - type: 'null'
+      required:
+      - world_id
+      - name
+      - icon_url
+      - image_urls
+      - rank
+  securitySchemes:
+    cookie_hr_s_production:
+      name: hr_s_production
+      in: cookie
+      description: null
+      type: apiKey

@@ -1,0 +1,473 @@
+openapi: 3.2.0
+info:
+  title: Create Builds API
+  version: '1.0'
+tags:
+- name: Builds
+paths:
+  /api/build:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetBundleResponse'
+      parameters:
+      - name: bundle_id
+        in: query
+        required: true
+        schema:
+          type: string
+      summary: Get Bundle
+      tags:
+      - Builds
+      operationId: get_bundle
+  /api/builds:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetBundleLinksResponse'
+      summary: Get Bundle Links
+      tags:
+      - Builds
+      operationId: get_bundle_links
+  /api/worlds/{world_id}/builds:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Page_PaginatedBuild'
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      - name: page
+        in: query
+        schema:
+          type: integer
+      security:
+      - cookie/hr_s_production: []
+      summary: Get Builds
+      tags:
+      - Builds
+      operationId: get_builds
+    post:
+      responses:
+        '201':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateBuildResponse'
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Create World Build
+      tags:
+      - Builds
+      operationId: create_world_build
+      description: Create a new build.
+  /api/worlds/{world_id}/builds/{build_number}:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedBuild'
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: build_number
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Get Build
+      tags:
+      - Builds
+      operationId: get_build
+  /api/worlds/{world_id}/builds-paginated:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Table_PaginatedBuild'
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      - name: page
+        in: query
+        schema:
+          type: integer
+      security:
+      - cookie/hr_s_production: []
+      summary: Get Builds Paginated
+      tags:
+      - Builds
+      operationId: get_builds_paginated
+  /api/worlds/{world_id}/builds/{build_number}/status:
+    put:
+      responses:
+        '204':
+          description: No content
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: build_number
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      - name: unity_version
+        in: query
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Start Processing World Build
+      tags:
+      - Builds
+      operationId: start_processing_world_build
+      description: 'Should be hit after the world bundle has been uploaded.
+
+
+        We assume the new status is `processing`.'
+  /api/worlds/{world_id}/builds/{build_number}/prebuilt:
+    put:
+      responses:
+        '204':
+          description: No content
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: build_number
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Import Prebuilt World Build
+      tags:
+      - Builds
+      operationId: import_prebuilt_world_build
+      description: 'Admin-only alternative to `start_processing_world_build`: the upload is a zip
+
+        of an already-built Unity `Build/Publish` folder, stored as the build output
+
+        without going through the Unity builder.'
+  /api/worlds/{world_id}/builds/{build_number}/retire:
+    post:
+      responses:
+        '204':
+          description: No content
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: build_number
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Retire Build
+      tags:
+      - Builds
+      operationId: retire_build
+  /api/worlds/{world_id}/release:
+    post:
+      responses:
+        '204':
+          description: No content
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReleaseBuildRequest'
+        required: true
+      security:
+      - cookie/hr_s_production: []
+      summary: Release Build
+      tags:
+      - Builds
+      operationId: release_build
+components:
+  schemas:
+    CreateBuildResponse:
+      type: object
+      properties:
+        build_number:
+          type: integer
+        upload_url:
+          type: string
+      required:
+      - build_number
+      - upload_url
+    ReleaseBuildRequest:
+      type: object
+      properties:
+        version:
+          type: string
+        release_notes:
+          oneOf:
+          - type: string
+          - type: 'null'
+      required:
+      - version
+    Task:
+      type: object
+      properties:
+        name:
+          type: string
+        status:
+          type: string
+          enum:
+          - pending
+          - running
+          - completed
+          - error
+        message:
+          oneOf:
+          - type: string
+          - type: 'null'
+      required:
+      - name
+      - status
+    SafeBuildResult:
+      type: object
+      properties:
+        duration:
+          type: integer
+        template_version:
+          type: string
+        unity_version:
+          type: string
+        api_version:
+          $ref: '#/components/schemas/WorldApiVersion'
+        pipeline:
+          items:
+            $ref: '#/components/schemas/Pipeline'
+          type: array
+      required:
+      - duration
+      - template_version
+      - unity_version
+      - api_version
+    Table_PaginatedBuild:
+      type: object
+      properties:
+        elements:
+          items:
+            $ref: '#/components/schemas/PaginatedBuild'
+          type: array
+        total:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+      required:
+      - elements
+      - total
+      - limit
+      - offset
+    GetBundleResponse:
+      type: object
+      properties:
+        build:
+          type: integer
+        version:
+          type: string
+        download_url:
+          type: string
+        download_page_url:
+          type: string
+      required:
+      - build
+      - version
+      - download_url
+      - download_page_url
+    BuildLink:
+      type: object
+      properties:
+        bundleId:
+          type: string
+        downloadUrl:
+          type: string
+      required:
+      - bundleId
+      - downloadUrl
+    Pipeline:
+      type: object
+      properties:
+        name:
+          type: string
+        status:
+          type: string
+          enum:
+          - pending
+          - running
+          - completed
+          - error
+        tasks:
+          items:
+            $ref: '#/components/schemas/Task'
+          type: array
+        duration:
+          type: integer
+        message:
+          oneOf:
+          - type: string
+          - type: 'null'
+      required:
+      - name
+      - status
+      - tasks
+      - duration
+    PaginatedBuild:
+      type: object
+      properties:
+        id:
+          type: string
+        number:
+          type: integer
+        status:
+          type: string
+        updated_at:
+          oneOf:
+          - type: 'null'
+        created_at:
+          oneOf:
+          - type: 'null'
+        result:
+          oneOf:
+          - $ref: '#/components/schemas/SafeBuildResult'
+          - type: 'null'
+        can_retire:
+          type: boolean
+      required:
+      - id
+      - number
+      - status
+      - updated_at
+      - created_at
+      - result
+    Page_PaginatedBuild:
+      type: object
+      properties:
+        elements:
+          items:
+            $ref: '#/components/schemas/PaginatedBuild'
+          type: array
+        has_more:
+          type: boolean
+        total:
+          oneOf:
+          - type: integer
+          - type: 'null'
+      required:
+      - elements
+      - has_more
+    GetBundleLinksResponse:
+      type: object
+      properties:
+        builds:
+          items:
+            $ref: '#/components/schemas/BuildLink'
+          type: array
+      required:
+      - builds
+    WorldApiVersion:
+      type: object
+      properties:
+        full:
+          type: string
+        major:
+          type: integer
+        minor:
+          type: integer
+        patch:
+          type: integer
+  securitySchemes:
+    cookie_hr_s_production:
+      name: hr_s_production
+      in: cookie
+      description: null
+      type: apiKey

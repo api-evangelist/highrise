@@ -1,0 +1,572 @@
+openapi: 3.2.0
+info:
+  title: Create Bots API
+  version: '1.0'
+tags:
+- name: Bots
+paths:
+  /api/bots:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListBotsResponse'
+      parameters:
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      - name: page
+        in: query
+        schema:
+          type: integer
+      security:
+      - cookie/hr_s_production: []
+      summary: Get Bots
+      tags:
+      - Bots
+      operationId: get_bots
+    post:
+      responses:
+        '201':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateBotResponse'
+      parameters:
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateBotRequest'
+        required: true
+      security:
+      - cookie/hr_s_production: []
+      summary: Create Bot
+      tags:
+      - Bots
+      operationId: create_bot
+  /api/bots/tokens:
+    post:
+      responses:
+        '201':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateApiTokenResponse'
+      parameters:
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateApiTokenRequest'
+        required: true
+      security:
+      - cookie/hr_s_production: []
+      summary: Create Api Token
+      tags:
+      - Bots
+      operationId: create_api_token
+  /api/bots/tokens/{api_token}:
+    delete:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteApiTokenResponse'
+      parameters:
+      - name: api_token
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Delete Api Token
+      tags:
+      - Bots
+      operationId: delete_api_token
+  /api/bots/{bot_id}:
+    put:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateBotResponse'
+      parameters:
+      - name: bot_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateBotRequest'
+        required: true
+      security:
+      - cookie/hr_s_production: []
+      summary: Update Bot
+      tags:
+      - Bots
+      operationId: update_bot
+  /api/bots/{bot_id}/wallet:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetWalletResponse'
+      parameters:
+      - name: bot_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Get Wallet
+      tags:
+      - Bots
+      operationId: get_wallet
+  /api/bots/{bot_id}/outfit:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetOutfitResponse'
+      parameters:
+      - name: bot_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Get Outfit
+      tags:
+      - Bots
+      operationId: get_outfit
+    put:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SetOutfitResponse'
+      parameters:
+      - name: bot_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetOutfitRequest'
+        required: true
+      security:
+      - cookie/hr_s_production: []
+      summary: Set Outfit
+      tags:
+      - Bots
+      operationId: set_outfit
+  /api/bots/{bot_id}/wallet/withdraw:
+    post:
+      responses:
+        '204':
+          description: No content
+      parameters:
+      - name: bot_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WithdrawFromWalletRequest'
+        required: true
+      security:
+      - cookie/hr_s_production: []
+      summary: Withdraw From Wallet
+      tags:
+      - Bots
+      operationId: withdraw_from_wallet
+  /api/bots/{bot_id}/wallet/deposit:
+    post:
+      responses:
+        '204':
+          description: No content
+      parameters:
+      - name: bot_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DepositToWalletRequest'
+        required: true
+      security:
+      - cookie/hr_s_production: []
+      summary: Deposit To Wallet
+      tags:
+      - Bots
+      operationId: deposit_to_wallet
+  /api/bots/{bot_id}/inventory:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetBotInventoryResponse'
+      parameters:
+      - name: bot_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Get Bot Inventory
+      tags:
+      - Bots
+      operationId: get_bot_inventory
+  /api/bots/lookup:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BotLookupResponse'
+      parameters:
+      - name: name_or_id
+        in: query
+        required: true
+        schema:
+          type: string
+      summary: Lookup Bot
+      tags:
+      - Bots
+      operationId: lookup_bot
+components:
+  schemas:
+    CurrencyItem:
+      type: object
+      properties:
+        type:
+          type: string
+        amount:
+          type: integer
+      required:
+      - type
+      - amount
+    DeleteApiTokenResponse:
+      type: object
+      properties: {}
+    ListBotsResponse:
+      type: object
+      properties:
+        bots:
+          items:
+            $ref: '#/components/schemas/BotInfo'
+          type: array
+        total:
+          type: integer
+      required:
+      - bots
+      - total
+    OutfitItemColors:
+      type: object
+      properties:
+        linked_colors:
+          type: string
+    BotInfo:
+      type: object
+      properties:
+        bot_id:
+          type: string
+        username:
+          type: string
+        bot_bio:
+          type: string
+        api_token:
+          type: string
+        avatar_key:
+          oneOf:
+          - type: string
+          - type: 'null'
+        icon_key:
+          oneOf:
+          - type: string
+          - type: 'null'
+      required:
+      - bot_id
+      - username
+      - bot_bio
+      - api_token
+    UpdateBotResponse:
+      type: object
+      properties:
+        bot:
+          $ref: '#/components/schemas/BotInfo'
+      required:
+      - bot
+    BotLookupResponse:
+      type: object
+      properties:
+        bot_id:
+          type: string
+        bot_name:
+          type: string
+        owner_username:
+          type: string
+      required:
+      - bot_id
+      - bot_name
+      - owner_username
+    SetOutfitRequest:
+      type: object
+      properties:
+        outfit:
+          items:
+            $ref: '#/components/schemas/Clothing'
+          type: array
+      required:
+      - outfit
+    SetOutfitResponse:
+      type: object
+      properties:
+        outfit:
+          items:
+            $ref: '#/components/schemas/Clothing'
+          type: array
+      required:
+      - outfit
+    GetBotInventoryResponse:
+      type: object
+      properties:
+        inventory:
+          items:
+            $ref: '#/components/schemas/InventoryItem'
+          type: array
+      required:
+      - inventory
+    NFIItemMetadata:
+      type: object
+      properties:
+        stack_id:
+          type: string
+        item_number:
+          type: integer
+      required:
+      - stack_id
+      - item_number
+    CreateApiTokenResponse:
+      type: object
+      properties:
+        token_id:
+          type: string
+      required:
+      - token_id
+    UpdateBotRequest:
+      type: object
+      properties:
+        username:
+          oneOf:
+          - type: string
+          - type: 'null'
+        bio:
+          oneOf:
+          - type: string
+          - type: 'null'
+    GetWalletResponse:
+      type: object
+      properties:
+        currencies:
+          items:
+            $ref: '#/components/schemas/CurrencyItem'
+          type: array
+      required:
+      - currencies
+    CreateBotResponse:
+      type: object
+      properties:
+        bot_info:
+          $ref: '#/components/schemas/BotInfo'
+      required:
+      - bot_info
+    GetOutfitResponse:
+      type: object
+      properties:
+        outfit:
+          items:
+            $ref: '#/components/schemas/Clothing'
+          type: array
+      required:
+      - outfit
+    NFTMetadata:
+      type: object
+      properties:
+        token_id:
+          type: string
+        contract:
+          type: string
+      required:
+      - token_id
+      - contract
+    DepositToWalletRequest:
+      type: object
+      properties:
+        currency_type:
+          type: string
+          enum:
+          - gold
+        amount:
+          type: integer
+      required:
+      - currency_type
+      - amount
+    Clothing:
+      type: object
+      properties:
+        descriptor_id:
+          type: string
+        active_palette:
+          type: integer
+        account_bound:
+          type: boolean
+        nft_metadata:
+          oneOf:
+          - $ref: '#/components/schemas/NFTMetadata'
+          - type: 'null'
+        nfi_metadata:
+          oneOf:
+          - $ref: '#/components/schemas/NFIItemMetadata'
+          - type: 'null'
+        parts:
+          oneOf:
+          - type: 'null'
+        colors:
+          oneOf:
+          - $ref: '#/components/schemas/OutfitItemColors'
+          - type: 'null'
+        selected_style:
+          type: integer
+      required:
+      - descriptor_id
+      - active_palette
+      - account_bound
+      - nft_metadata
+      - nfi_metadata
+    CreateApiTokenRequest:
+      type: object
+      properties:
+        bot_id:
+          type: string
+      required:
+      - bot_id
+    WithdrawFromWalletRequest:
+      type: object
+      properties:
+        currency_type:
+          type: string
+          enum:
+          - gold
+          - earned_gold
+        amount:
+          type: integer
+      required:
+      - currency_type
+      - amount
+    InventoryItem:
+      type: object
+      properties:
+        item_id:
+          type: string
+        amount_owned:
+          type: integer
+        equipped:
+          type: boolean
+      required:
+      - item_id
+      - amount_owned
+      - equipped
+    CreateBotRequest:
+      type: object
+      properties:
+        username:
+          type: string
+      required:
+      - username
+  securitySchemes:
+    cookie_hr_s_production:
+      name: hr_s_production
+      in: cookie
+      description: null
+      type: apiKey

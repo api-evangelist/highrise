@@ -1,0 +1,31 @@
+openapi: 3.2.0
+info:
+  title: Create Specs API
+  version: '1.0'
+tags:
+- name: Specs
+paths:
+  /api/specs:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetApiSpecResponse'
+      summary: Get Api Spec
+      tags:
+      - Specs
+      operationId: get_api_spec
+components:
+  schemas:
+    GetApiSpecResponse:
+      type: object
+      properties: {}
+  securitySchemes:
+    cookie_hr_s_production:
+      name: hr_s_production
+      in: cookie
+      description: null
+      type: apiKey

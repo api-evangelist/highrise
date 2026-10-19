@@ -1,0 +1,978 @@
+openapi: 3.2.0
+info:
+  title: Create Worlds API
+  version: '1.0'
+tags:
+- name: worlds
+paths:
+  /api/worlds:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Page_WorldWithMember'
+      parameters:
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      - name: page
+        in: query
+        schema:
+          type: integer
+      - name: for_upload
+        in: query
+        schema:
+          type: boolean
+      security:
+      - cookie/hr_s_production: []
+      summary: Get Worlds For User
+      tags:
+      - worlds
+      operationId: get_worlds_for_user
+    post:
+      responses:
+        '201':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/World'
+      parameters:
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateWorldRequest'
+        required: true
+      security:
+      - cookie/hr_s_production: []
+      summary: Create World
+      tags:
+      - worlds
+      operationId: create_world
+  /api/worlds/{world_id}:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorldWithMember'
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Get World
+      tags:
+      - worlds
+      operationId: get_world
+    post:
+      responses:
+        '204':
+          description: No content
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ArchiveWorldRequest'
+        required: true
+      security:
+      - cookie/hr_s_production: []
+      summary: Archive World
+      tags:
+      - worlds
+      operationId: archive_world
+    patch:
+      responses:
+        '200':
+          description: No content
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateWorldRequest'
+        required: true
+      security:
+      - cookie/hr_s_production: []
+      summary: Update World
+      tags:
+      - worlds
+      operationId: update_world
+  /api/worlds/{world_id}/create_presigned_urls:
+    post:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatePresignedUploadResponse'
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePresignedUploadRequest'
+        required: true
+      security:
+      - cookie/hr_s_production: []
+      summary: Create Presigned World Upload Urls
+      tags:
+      - worlds
+      operationId: create_presigned_world_upload_urls
+      description: Create presigned upload urls for world.
+  /api/worlds/{world_id}/private:
+    post:
+      responses:
+        '204':
+          description: No content
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Unset Live Track
+      tags:
+      - worlds
+      operationId: unset_live_track
+  /api/worlds/{world_id}/shutdown_instances:
+    post:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShutdownWorldInstancesResponse'
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShutdownWorldInstancesRequest'
+        required: true
+      security:
+      - cookie/hr_s_production: []
+      summary: Shutdown World Instances
+      tags:
+      - worlds
+      operationId: shutdown_world_instances
+  /api/worlds/invites:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Table_World'
+      parameters:
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      - name: page
+        in: query
+        schema:
+          type: integer
+      security:
+      - cookie/hr_s_production: []
+      summary: Get Invites Paginated
+      tags:
+      - worlds
+      operationId: get_invites_paginated
+  /api/worlds_paginated:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Table_WorldWithMember'
+      parameters:
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      - name: page
+        in: query
+        schema:
+          type: integer
+      - name: query
+        in: query
+        schema:
+          type: string
+      - name: show_archived
+        in: query
+        schema:
+          type: integer
+      - name: with_analytics
+        in: query
+        schema:
+          type: boolean
+      - name: show_is_owner
+        in: query
+        schema:
+          type: integer
+      security:
+      - cookie/hr_s_production: []
+      summary: Get Worlds For User Paginated
+      tags:
+      - worlds
+      operationId: get_worlds_for_user_paginated
+  /api/worlds/{world_id}/posts:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Page_WorldPost'
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      - name: page
+        in: query
+        schema:
+          type: integer
+      security:
+      - cookie/hr_s_production: []
+      summary: Get World Posts
+      tags:
+      - worlds
+      operationId: get_world_posts
+  /api/worlds/{world_id}/profit_sharing:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetWorldProfitSharingResponse'
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Get World Profit Sharing
+      tags:
+      - worlds
+      operationId: get_world_profit_sharing
+    put:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateWorldProfitSharingResponse'
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateWorldProfitSharing'
+        required: true
+      security:
+      - cookie/hr_s_production: []
+      summary: Update World Profit Sharing
+      tags:
+      - worlds
+      operationId: update_world_profit_sharing
+components:
+  schemas:
+    UpdateWorldProfitSharingResponse:
+      type: object
+      properties:
+        profit_sharing:
+          oneOf:
+          - type: 'null'
+    World:
+      type: object
+      properties:
+        name:
+          type: string
+        max_users:
+          type: integer
+        short_description:
+          oneOf:
+          - type: string
+          - type: 'null'
+        description:
+          oneOf:
+          - type: string
+          - type: 'null'
+        description_language:
+          oneOf:
+          - type: string
+          - type: 'null'
+        tags:
+          oneOf:
+          - type: 'null'
+        live_track:
+          oneOf:
+          - $ref: '#/components/schemas/Track'
+          - type: 'null'
+        outdated_tracks:
+          items:
+            $ref: '#/components/schemas/Track'
+          type: array
+        private_track:
+          oneOf:
+          - $ref: '#/components/schemas/Track'
+          - type: 'null'
+        is_public:
+          type: boolean
+        is_archived:
+          type: boolean
+        is_featured:
+          type: boolean
+        public_at:
+          oneOf:
+          - type: 'null'
+        archived_at:
+          oneOf:
+          - type: 'null'
+        count:
+          $ref: '#/components/schemas/Counters'
+        host_options:
+          $ref: '#/components/schemas/HostOptions'
+        icon_url:
+          oneOf:
+          - type: string
+          - type: 'null'
+        image_urls:
+          items:
+            type: string
+          type: array
+        mod_status:
+          $ref: '#/components/schemas/ModerationStatus'
+        categories:
+          items:
+            type: string
+          type: array
+        default_room_description:
+          oneOf:
+          - type: string
+          - type: 'null'
+        default_room_locale:
+          oneOf:
+          - type: string
+          - type: 'null'
+        default_room_title:
+          oneOf:
+          - type: string
+          - type: 'null'
+        is_monetized:
+          type: boolean
+        iap_products_enabled:
+          type: boolean
+        skip_purchase_prompt_enabled:
+          type: boolean
+        gold_earned:
+          type: integer
+        last_engagement_payout:
+          oneOf:
+          - type: 'null'
+        last_product_payout:
+          oneOf:
+          - type: 'null'
+        last_subscription_payout:
+          oneOf:
+          - type: 'null'
+        enable_spectating:
+          type: boolean
+        match_player_locale:
+          type: boolean
+        match_into_owned_rooms:
+          type: boolean
+        allowed_http_endpoints:
+          items:
+            type: string
+          type: array
+        allow_internal_access:
+          type: boolean
+        boosts:
+          items:
+            $ref: '#/components/schemas/WorldBoost'
+          type: array
+        num_boosts:
+          type: integer
+        voice_until:
+          oneOf:
+          - type: 'null'
+        content_access:
+          $ref: '#/components/schemas/ContentAccess'
+        profit_sharing:
+          type: object
+          additionalProperties:
+            type: integer
+        pinned_at:
+          oneOf:
+          - type: 'null'
+        grant_item_configs:
+          oneOf:
+          - type: 'null'
+      required:
+      - name
+    CreatePresignedUploadRequest:
+      type: object
+      properties:
+        file_metadata:
+          items:
+            $ref: '#/components/schemas/FileMetadata'
+          type: array
+        upload_key:
+          type: string
+      required:
+      - file_metadata
+      - upload_key
+    UpdateWorldProfitSharing:
+      type: object
+      properties:
+        profit_sharing:
+          oneOf:
+          - type: 'null'
+    WorldPost:
+      type: object
+      properties:
+        _id:
+          type: string
+        type:
+          type: string
+        author:
+          $ref: '#/components/schemas/WorldPostAuthor'
+        carousel_file_keys:
+          items:
+            type: string
+          type: array
+        num_comments:
+          type: integer
+        num_likes:
+          type: integer
+        body:
+          oneOf:
+          - $ref: '#/components/schemas/WorldPostTextBody'
+          - type: 'null'
+        caption:
+          oneOf:
+          - type: string
+          - type: 'null'
+        file_key:
+          oneOf:
+          - type: string
+          - type: 'null'
+        bg_color:
+          oneOf:
+          - type: integer
+          - type: 'null'
+        world_id:
+          oneOf:
+          - type: string
+          - type: 'null'
+        created_at:
+          oneOf:
+          - type: string
+          - type: 'null'
+        updated_at:
+          oneOf:
+          - type: string
+          - type: 'null'
+      required:
+      - _id
+      - type
+      - author
+    Counters:
+      type: object
+      properties:
+        likes:
+          type: integer
+        dislikes:
+          type: integer
+        visits:
+          type: integer
+        followers:
+          type: integer
+        active_players:
+          type: integer
+        active_players_direct:
+          type: integer
+        active_last_update:
+          oneOf:
+          - type: 'null'
+    Table_WorldWithMember:
+      type: object
+      properties:
+        elements:
+          items:
+            $ref: '#/components/schemas/WorldWithMember'
+          type: array
+        total:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+      required:
+      - elements
+      - total
+      - limit
+      - offset
+    Page_WorldWithMember:
+      type: object
+      properties:
+        elements:
+          items:
+            $ref: '#/components/schemas/WorldWithMember'
+          type: array
+        has_more:
+          type: boolean
+        total:
+          oneOf:
+          - type: integer
+          - type: 'null'
+      required:
+      - elements
+      - has_more
+    WorldWithMember:
+      type: object
+      properties:
+        member:
+          $ref: '#/components/schemas/RequestingMember'
+        name:
+          type: string
+        count:
+          $ref: '#/components/schemas/Counters'
+        mod_status:
+          $ref: '#/components/schemas/ModerationStatus'
+        image_urls:
+          items:
+            type: string
+          type: array
+        is_public:
+          type: boolean
+        is_archived:
+          type: boolean
+        is_outdated:
+          type: boolean
+        tags:
+          oneOf:
+          - type: 'null'
+        short_description:
+          oneOf:
+          - type: string
+          - type: 'null'
+        description:
+          oneOf:
+          - type: string
+          - type: 'null'
+        icon_url:
+          oneOf:
+          - type: string
+          - type: 'null'
+        categories:
+          oneOf:
+          - type: 'null'
+        host_options:
+          oneOf:
+          - $ref: '#/components/schemas/HostOptions'
+          - type: 'null'
+        max_users:
+          oneOf:
+          - type: integer
+          - type: 'null'
+        analytics:
+          oneOf:
+          - $ref: '#/components/schemas/CreatorAnalyticsValue'
+          - type: 'null'
+        match_player_locale:
+          type: boolean
+        content_access:
+          oneOf:
+          - $ref: '#/components/schemas/ContentAccess'
+          - type: 'null'
+        enable_spectating:
+          type: boolean
+        host_options_whitelisted_users_metadata:
+          oneOf:
+          - type: 'null'
+        persistent_voice_settings:
+          oneOf:
+          - type: 'null'
+        iap_products_enabled:
+          type: boolean
+        skip_purchase_prompt_enabled:
+          type: boolean
+      required:
+      - member
+      - name
+      - count
+      - mod_status
+      - image_urls
+    ModerationStatus:
+      type: object
+      properties:
+        banned_until:
+          oneOf:
+          - type: 'null'
+        hidden_until:
+          oneOf:
+          - type: 'null'
+        ban_reason:
+          oneOf:
+          - type: string
+          - type: 'null'
+    RequestingMember:
+      type: object
+      properties:
+        system_permissions:
+          items:
+            type: integer
+          type: array
+        roles:
+          items:
+            $ref: '#/components/schemas/RequestingMemberRole'
+          type: array
+      required:
+      - system_permissions
+      - roles
+    ArchiveWorldRequest:
+      type: object
+      properties:
+        is_archived:
+          type: boolean
+      required:
+      - is_archived
+    UpdateWorldRequest:
+      type: object
+      properties:
+        name:
+          oneOf:
+          - type: string
+          - type: 'null'
+        short_description:
+          oneOf:
+          - type: string
+          - type: 'null'
+        description:
+          oneOf:
+          - type: string
+          - type: 'null'
+        icon_url:
+          oneOf:
+          - type: string
+          - type: 'null'
+        tags:
+          oneOf:
+          - type: 'null'
+        image_urls:
+          oneOf:
+          - type: 'null'
+        host_options:
+          oneOf:
+          - $ref: '#/components/schemas/HostOptions'
+          - type: 'null'
+        categories:
+          oneOf:
+          - type: 'null'
+        max_users:
+          oneOf:
+          - type: integer
+          - type: 'null'
+        match_player_locale:
+          oneOf:
+          - type: boolean
+          - type: 'null'
+        content_access:
+          oneOf:
+          - type: 'null'
+        enable_spectating:
+          oneOf:
+          - type: boolean
+          - type: 'null'
+        enable_world_voice:
+          oneOf:
+          - type: boolean
+          - type: 'null'
+        unify_live_voice:
+          oneOf:
+          - type: boolean
+          - type: 'null'
+    CreatePresignedUploadResponse:
+      type: object
+      properties:
+        presigned_urls:
+          items:
+            type: string
+          type: array
+      required:
+      - presigned_urls
+    ShutdownWorldInstancesRequest:
+      type: object
+      properties:
+        world_id:
+          type: string
+        max_build_id:
+          oneOf:
+          - type: integer
+          - type: 'null'
+        shutdown_in:
+          type: integer
+      required:
+      - world_id
+    FileMetadata:
+      type: object
+      properties:
+        mime:
+          type: string
+        format:
+          type: string
+        name:
+          oneOf:
+          - type: string
+          - type: 'null'
+      required:
+      - mime
+      - format
+    WorldPostTextBody:
+      type: object
+      properties:
+        text:
+          oneOf:
+          - type: string
+          - type: 'null'
+        inventory:
+          oneOf:
+          - type: 'null'
+    WorldBoost:
+      type: object
+      properties: {}
+    HostOptions:
+      type: object
+      properties:
+        allow_hosting:
+          type: boolean
+        host_price:
+          type: integer
+        limit_per_owner:
+          type: integer
+        whitelisted_users:
+          type: integer
+    ContentAccess:
+      type: object
+      properties:
+        is_18plus:
+          type: boolean
+        password:
+          oneOf:
+          - type: string
+          - type: 'null'
+    RequestingMemberRole:
+      type: object
+      properties:
+        name:
+          type: string
+        order:
+          type: integer
+        system_permissions:
+          items:
+            type: integer
+          type: array
+      required:
+      - name
+      - order
+      - system_permissions
+    Table_World:
+      type: object
+      properties:
+        elements:
+          items:
+            $ref: '#/components/schemas/World'
+          type: array
+        total:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+      required:
+      - elements
+      - total
+      - limit
+      - offset
+    WorldApiVersion:
+      type: object
+      properties:
+        full:
+          type: string
+        major:
+          type: integer
+        minor:
+          type: integer
+        patch:
+          type: integer
+    CreatorAnalyticsValue:
+      type: object
+      properties:
+        resource_id:
+          oneOf:
+          - type: string
+          - type: 'null'
+    CreateWorldRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        short_description:
+          oneOf:
+          - type: string
+          - type: 'null'
+        tags:
+          oneOf:
+          - type: 'null'
+        world_id:
+          oneOf:
+          - type: string
+          - type: 'null'
+      required:
+      - name
+    Page_WorldPost:
+      type: object
+      properties:
+        elements:
+          items:
+            $ref: '#/components/schemas/WorldPost'
+          type: array
+        has_more:
+          type: boolean
+        total:
+          oneOf:
+          - type: integer
+          - type: 'null'
+      required:
+      - elements
+      - has_more
+    Track:
+      type: object
+      properties:
+        build_num:
+          type: integer
+        api_version:
+          $ref: '#/components/schemas/WorldApiVersion'
+      required:
+      - build_num
+    WorldPostAuthor:
+      type: object
+      properties:
+        _id:
+          type: string
+        user_id:
+          type: string
+        show_as_world:
+          type: boolean
+      required:
+      - _id
+      - user_id
+    ShutdownWorldInstancesResponse:
+      type: object
+      properties: {}
+    GetWorldProfitSharingResponse:
+      type: object
+      properties:
+        profit_sharing:
+          oneOf:
+          - type: 'null'
+  securitySchemes:
+    cookie_hr_s_production:
+      name: hr_s_production
+      in: cookie
+      description: null
+      type: apiKey

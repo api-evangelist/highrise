@@ -1,0 +1,685 @@
+openapi: 3.2.0
+info:
+  title: Create Products API
+  version: '1.0'
+tags:
+- name: Products
+paths:
+  /api/world-product-iap-tiers:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetWorldProductIAPTiersResponse'
+      parameters:
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Get World Product Iap Tiers
+      tags:
+      - Products
+      operationId: get_world_product_iap_tiers
+      description: The static price-tier catalog for the portal's tier picker.
+  /api/worlds/{world_id}/products:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Table_WorldProduct'
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      - name: sort
+        in: query
+        schema:
+          type: integer
+      - name: page
+        in: query
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        schema:
+          type: integer
+      - name: product_ids
+        in: query
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Get Products
+      tags:
+      - Products
+      operationId: get_products
+    post:
+      responses:
+        '201':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateProductResponse'
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProductRequest'
+        required: true
+      security:
+      - cookie/hr_s_production: []
+      summary: Create Product
+      tags:
+      - Products
+      operationId: create_product
+  /api/worlds/{world_id}/products/{product_id}:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorldProduct'
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: product_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Get Product
+      tags:
+      - Products
+      operationId: get_product
+    patch:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateProductResponse'
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: product_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProductRequest'
+        required: true
+      security:
+      - cookie/hr_s_production: []
+      summary: Update Product
+      tags:
+      - Products
+      operationId: update_product
+    delete:
+      responses:
+        '200':
+          description: No content
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: product_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Delete Product
+      tags:
+      - Products
+      operationId: delete_product
+  /api/worlds/{world_id}/products/{product_id}/create_presigned_urls:
+    post:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatePresignedUploadResponse'
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: product_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePresignedUploadRequest'
+        required: true
+      security:
+      - cookie/hr_s_production: []
+      summary: Create Presigned World Product Upload Urls
+      tags:
+      - Products
+      operationId: create_presigned_world_product_upload_urls
+  /api/worlds/{world_id}/products/{product_id}/logs:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Table_WorldProductSaleLog'
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: product_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      - name: sort
+        in: query
+        schema:
+          type: integer
+      - name: page
+        in: query
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        schema:
+          type: integer
+      security:
+      - cookie/hr_s_production: []
+      summary: Get Product Logs
+      tags:
+      - Products
+      operationId: get_product_logs
+  /api/worlds/{world_id}/products-analytics/top:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetTopProductsResponse'
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: aggregation_start_date_time
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: aggregation_end_date_time
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      - name: limit
+        in: query
+        schema:
+          type: integer
+      security:
+      - cookie/hr_s_production: []
+      summary: Get Top Products
+      tags:
+      - Products
+      operationId: get_top_products
+  /api/worlds/{world_id}/products-analytics/stats:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetProductStatsResponse'
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      - name: aggregation_start_date_time
+        in: query
+        schema:
+          type: string
+      - name: aggregation_end_date_time
+        in: query
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Get Products Stats
+      tags:
+      - Products
+      operationId: get_products_stats
+  /api/worlds/{world_id}/products-analytics/all:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetProductsAnalyticsResponse'
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: aggregation_start_date_time
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: aggregation_end_date_time
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Get Products Analytics
+      tags:
+      - Products
+      operationId: get_products_analytics
+components:
+  schemas:
+    WorldProductSaleLog:
+      type: object
+      properties:
+        buyer:
+          $ref: '#/components/schemas/Buyer'
+        net_revenue:
+          type: integer
+        gross_revenue:
+          type: integer
+        created_at:
+          type: string
+        updated_at:
+          type: string
+      required:
+      - buyer
+      - net_revenue
+      - gross_revenue
+      - created_at
+      - updated_at
+    CreatePresignedUploadRequest:
+      type: object
+      properties:
+        file_metadata:
+          items:
+            $ref: '#/components/schemas/FileMetadata'
+          type: array
+        upload_key:
+          type: string
+      required:
+      - file_metadata
+      - upload_key
+    GetWorldProductIAPTiersResponse:
+      type: object
+      properties:
+        tiers:
+          items:
+            $ref: '#/components/schemas/WorldProductIAPTierInfo'
+          type: array
+      required:
+      - tiers
+    UpdateProductRequest:
+      type: object
+      properties:
+        name:
+          oneOf:
+          - type: string
+          - type: 'null'
+        description:
+          oneOf:
+          - type: string
+          - type: 'null'
+        price:
+          oneOf:
+          - type: integer
+          - type: 'null'
+        image_url:
+          oneOf:
+          - type: string
+          - type: 'null'
+        active:
+          oneOf:
+          - type: boolean
+          - type: 'null'
+        is_payout_to_world:
+          oneOf:
+          - type: boolean
+          - type: 'null'
+        enabled_rails:
+          oneOf:
+          - type: 'null'
+        iap_tier:
+          oneOf:
+          - type: string
+          - type: 'null'
+        skip_purchase_prompt:
+          oneOf:
+          - type: boolean
+          - type: 'null'
+    CreateProductResponse:
+      type: object
+      properties:
+        product:
+          $ref: '#/components/schemas/WorldProduct'
+      required:
+      - product
+    CreatePresignedUploadResponse:
+      type: object
+      properties:
+        presigned_urls:
+          items:
+            type: string
+          type: array
+      required:
+      - presigned_urls
+    FileMetadata:
+      type: object
+      properties:
+        mime:
+          type: string
+        format:
+          type: string
+        name:
+          oneOf:
+          - type: string
+          - type: 'null'
+      required:
+      - mime
+      - format
+    WorldProduct:
+      type: object
+      properties:
+        world_id:
+          type: string
+        product_id:
+          type: string
+        name:
+          type: string
+        description:
+          oneOf:
+          - type: string
+          - type: 'null'
+        price:
+          type: integer
+        active:
+          type: boolean
+        image_url:
+          oneOf:
+          - type: string
+          - type: 'null'
+        is_payout_to_world:
+          oneOf:
+          - type: boolean
+          - type: 'null'
+        enabled_rails:
+          oneOf:
+          - type: boolean
+          - type: 'null'
+        iap_tier:
+          oneOf:
+          - type: string
+          - type: 'null'
+        skip_purchase_prompt:
+          type: boolean
+        usd_cents:
+          oneOf:
+          - type: integer
+          - type: 'null'
+      required:
+      - world_id
+      - product_id
+      - name
+      - description
+      - price
+      - active
+      - image_url
+    GetProductStatsResponse:
+      type: object
+      properties:
+        total_sales:
+          type: integer
+        total_net_revenue:
+          type: integer
+        total_iap_sales:
+          type: integer
+        total_iap_gross_usd_cents:
+          type: integer
+      required:
+      - total_sales
+      - total_net_revenue
+    IapAnalytic:
+      type: object
+      properties:
+        gross_usd_cents:
+          type: integer
+      required:
+      - gross_usd_cents
+    Analytic:
+      type: object
+      properties:
+        net_revnue:
+          type: integer
+      required:
+      - net_revnue
+    UpdateProductResponse:
+      type: object
+      properties:
+        product:
+          $ref: '#/components/schemas/WorldProduct'
+      required:
+      - product
+    Table_WorldProductSaleLog:
+      type: object
+      properties:
+        elements:
+          items:
+            $ref: '#/components/schemas/WorldProductSaleLog'
+          type: array
+        total:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+      required:
+      - elements
+      - total
+      - limit
+      - offset
+    Buyer:
+      type: object
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        icon_key:
+          oneOf:
+          - type: string
+          - type: 'null'
+        avatar_key:
+          oneOf:
+          - type: string
+          - type: 'null'
+      required:
+      - id
+      - username
+    WorldProductIAPTierInfo:
+      type: object
+      properties:
+        id:
+          type: string
+        usd_cents:
+          type: integer
+      required:
+      - id
+      - usd_cents
+    GetTopProductsResponse:
+      type: object
+      properties: {}
+    CreateProductRequest:
+      type: object
+      properties:
+        product_id:
+          type: string
+        name:
+          type: string
+        description:
+          oneOf:
+          - type: string
+          - type: 'null'
+        is_payout_to_world:
+          oneOf:
+          - type: boolean
+          - type: 'null'
+        enabled_rails:
+          oneOf:
+          - type: 'null'
+        iap_tier:
+          oneOf:
+          - type: string
+          - type: 'null'
+        skip_purchase_prompt:
+          oneOf:
+          - type: boolean
+          - type: 'null'
+      required:
+      - product_id
+      - name
+      - description
+    Table_WorldProduct:
+      type: object
+      properties:
+        elements:
+          items:
+            $ref: '#/components/schemas/WorldProduct'
+          type: array
+        total:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+      required:
+      - elements
+      - total
+      - limit
+      - offset
+    GetProductsAnalyticsResponse:
+      type: object
+      properties:
+        granularity:
+          type: string
+        analytics:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Analytic'
+        iap_analytics:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/IapAnalytic'
+      required:
+      - granularity
+      - analytics
+  securitySchemes:
+    cookie_hr_s_production:
+      name: hr_s_production
+      in: cookie
+      description: null
+      type: apiKey

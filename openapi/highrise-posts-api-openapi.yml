@@ -1,73 +1,316 @@
 openapi: 3.2.0
 info:
-  title: Highrise Web Posts API
-  version: '2026.04'
-  description: Read-only REST API for public Highrise data (users, rooms, posts, items, grabs). Generated faithfully from the official highrise-bot-sdk web-api client (github.com/pocketzworld/python-bot-sdk, src/highrise/webapi.py) and the create.highrise.game Web API reference. Highrise does not publish an OpenAPI document; this profiles the documented surface only — no invented paths.
-  x-provenance:
-    generated: '2026-07-19'
-    method: generated
-    source: https://github.com/pocketzworld/python-bot-sdk/blob/main/src/highrise/webapi.py
-  x-apievangelist-note: The Web API is read-only (GET). Single-resource endpoints return by id; collection endpoints accept filter and pagination query parameters (starts_after cursor + limit).
-servers:
-- url: https://webapi.highrise.game
-  description: Highrise public Web API
+  title: Create Posts API
+  version: '1.0'
 tags:
 - name: Posts
 paths:
-  /posts:
-    get:
-      tags:
-      - Posts
-      operationId: getPosts
-      summary: List public posts
-      parameters:
-      - $ref: '#/components/parameters/StartsAfter'
-      - $ref: '#/components/parameters/SortOrder'
-      - $ref: '#/components/parameters/Limit'
+  /api/worlds/{world_id}/posts:
+    post:
       responses:
         '200':
-          description: A page of posts.
-  /posts/{post_id}:
-    get:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatePostResponse'
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePostRequest'
+        required: true
+      security:
+      - cookie/hr_s_production: []
+      summary: Create World Post
       tags:
       - Posts
-      operationId: getPost
-      summary: Get a public post
-      parameters:
-      - $ref: '#/components/parameters/PostId'
+      operationId: create_world_post
+  /api/posts:
+    get:
       responses:
         '200':
-          description: The post.
-        '404':
-          description: Post not found.
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUserPostsResponse'
+      parameters:
+      - name: user_id
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: last_id
+        in: query
+        schema:
+          type: string
+      summary: Get User Posts
+      tags:
+      - Posts
+      operationId: get_user_posts
+    post:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatePostResponse'
+      parameters:
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePostRequest'
+        required: true
+      security:
+      - cookie/hr_s_production: []
+      summary: Create Post
+      tags:
+      - Posts
+      operationId: create_post
 components:
-  parameters:
-    StartsAfter:
-      name: starts_after
-      in: query
-      required: false
-      description: Cursor — return results after this id.
-      schema:
-        type: string
-    SortOrder:
-      name: sort_order
-      in: query
-      required: false
-      schema:
-        type: string
-        enum:
-        - asc
-        - desc
-    Limit:
-      name: limit
-      in: query
-      required: false
-      schema:
-        type: integer
-        default: 20
-    PostId:
-      name: post_id
-      in: path
-      required: true
-      schema:
-        type: string
+  schemas:
+    OutfitItemColors:
+      type: object
+      properties:
+        linked_colors:
+          type: string
+    NFTMetadata:
+      type: object
+      properties:
+        token_id:
+          type: string
+        contract:
+          type: string
+      required:
+      - token_id
+      - contract
+    Post:
+      type: object
+      properties:
+        post_id:
+          type: string
+        type:
+          type: string
+        bg_color:
+          type: integer
+        author:
+          $ref: '#/components/schemas/UserInfo'
+        original_author:
+          oneOf:
+          - $ref: '#/components/schemas/UserInfo'
+          - type: 'null'
+        num_comments:
+          type: integer
+        num_likes:
+          type: integer
+        num_reposts:
+          type: integer
+        caption:
+          type: string
+        file_key:
+          type: string
+        carousel_file_keys:
+          items:
+            type: string
+          type: array
+        is_edited:
+          type: boolean
+        comments:
+          items:
+            $ref: '#/components/schemas/Comment'
+          type: array
+      required:
+      - post_id
+      - type
+      - bg_color
+      - author
+      - original_author
+      - num_comments
+      - num_likes
+      - num_reposts
+      - caption
+      - file_key
+      - carousel_file_keys
+      - is_edited
+      - comments
+    UserInfo:
+      type: object
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        outfit:
+          items:
+            $ref: '#/components/schemas/Clothing'
+          type: array
+        email:
+          oneOf:
+          - type: string
+          - type: 'null'
+        privilege_level:
+          oneOf:
+          - type: string
+          - type: 'null'
+        avatar_key:
+          oneOf:
+          - type: string
+          - type: 'null'
+        icon_key:
+          oneOf:
+          - type: string
+          - type: 'null'
+        pet:
+          oneOf:
+          - $ref: '#/components/schemas/PetInfo'
+          - type: 'null'
+      required:
+      - id
+      - username
+      - outfit
+    PetInfo:
+      type: object
+      properties:
+        name:
+          type: string
+        stack_id:
+          type: string
+        descriptor_id:
+          type: string
+        outfit:
+          items:
+            $ref: '#/components/schemas/Clothing'
+          type: array
+      required:
+      - name
+      - stack_id
+      - descriptor_id
+      - outfit
+    Comment:
+      type: object
+      properties:
+        comment_id:
+          type: string
+        author:
+          $ref: '#/components/schemas/UserInfo'
+        num_likes:
+          type: integer
+        text:
+          type: string
+      required:
+      - comment_id
+      - author
+      - num_likes
+      - text
+    Clothing:
+      type: object
+      properties:
+        descriptor_id:
+          type: string
+        active_palette:
+          type: integer
+        account_bound:
+          type: boolean
+        nft_metadata:
+          oneOf:
+          - $ref: '#/components/schemas/NFTMetadata'
+          - type: 'null'
+        nfi_metadata:
+          oneOf:
+          - $ref: '#/components/schemas/NFIItemMetadata'
+          - type: 'null'
+        parts:
+          oneOf:
+          - type: 'null'
+        colors:
+          oneOf:
+          - $ref: '#/components/schemas/OutfitItemColors'
+          - type: 'null'
+        selected_style:
+          type: integer
+      required:
+      - descriptor_id
+      - active_palette
+      - account_bound
+      - nft_metadata
+      - nfi_metadata
+    CreatePostRequest:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - text
+          - photo
+          - video
+        file_keys:
+          items:
+            type: string
+          type: array
+        post_id:
+          oneOf:
+          - type: string
+          - type: 'null'
+        caption:
+          oneOf:
+          - type: string
+          - type: 'null'
+        bg_color:
+          oneOf:
+          - type: integer
+          - type: 'null'
+        world_id:
+          oneOf:
+          - type: string
+          - type: 'null'
+        hide_comments:
+          type: boolean
+    CreatePostResponse:
+      type: object
+      properties:
+        post_id:
+          type: string
+      required:
+      - post_id
+    NFIItemMetadata:
+      type: object
+      properties:
+        stack_id:
+          type: string
+        item_number:
+          type: integer
+      required:
+      - stack_id
+      - item_number
+    GetUserPostsResponse:
+      type: object
+      properties:
+        posts:
+          items:
+            $ref: '#/components/schemas/Post'
+          type: array
+      required:
+      - posts
+  securitySchemes:
+    cookie_hr_s_production:
+      name: hr_s_production
+      in: cookie
+      description: null
+      type: apiKey

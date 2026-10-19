@@ -1,0 +1,295 @@
+openapi: 3.2.0
+info:
+  title: Create Analytics API
+  version: '1.0'
+tags:
+- name: Analytics
+paths:
+  /api/creator-analytics/rooms/{room_id}/breakdown:
+    post:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCreatorEngagementAnalyticsResponse'
+      parameters:
+      - name: room_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: aggregation_start_date_time
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: aggregation_end_date_time
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      - name: analytics_type
+        in: query
+        schema:
+          type: string
+      - name: breakdown_by
+        in: query
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetCreatorEngagementAnalyticsRequest'
+        required: true
+      security:
+      - cookie/hr_s_production: []
+      summary: Get Creator Room Analytics
+      tags:
+      - Analytics
+      operationId: get_creator_room_analytics
+  /api/creator-analytics/worlds/{world_id}/breakdown:
+    post:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCreatorEngagementAnalyticsResponse'
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: aggregation_start_date_time
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: aggregation_end_date_time
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      - name: analytics_type
+        in: query
+        schema:
+          type: string
+      - name: breakdown_by
+        in: query
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetCreatorEngagementAnalyticsRequest'
+        required: true
+      security:
+      - cookie/hr_s_production: []
+      summary: Get Creator World Analytics
+      tags:
+      - Analytics
+      operationId: get_creator_world_analytics
+  /api/creator-analytics/ccu:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCreatorCCUAnalyticsResponse'
+      parameters:
+      - name: resource_id
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: aggregation_start_date_time
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: aggregation_end_date_time
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: type
+        in: query
+        schema:
+          type: string
+      summary: Get Creator Ccu Analytics
+      tags:
+      - Analytics
+      operationId: get_creator_ccu_analytics
+  /api/creator-analytics/audience/country:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAudienceAnalyticsResponse'
+      parameters:
+      - name: resource_id
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: aggregation_start_date_time
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: aggregation_end_date_time
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: resource_type
+        in: query
+        schema:
+          type: string
+      - name: group_by
+        in: query
+        schema:
+          type: string
+      summary: Get Creator Audience Analytics
+      tags:
+      - Analytics
+      operationId: get_creator_audience_analytics
+  /api/creator-analytics/worlds/engagement-metrics:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetWorldEngagementMetricsResponse'
+      parameters:
+      - name: world_ids
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: aggregation_start_date_time
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: aggregation_end_date_time
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Get World Engagement Metrics
+      tags:
+      - Analytics
+      operationId: get_world_engagement_metrics
+components:
+  schemas:
+    CreatorAnalyticsValue:
+      type: object
+      properties:
+        resource_id:
+          oneOf:
+          - type: string
+          - type: 'null'
+    GetAudienceAnalyticsResponse:
+      type: object
+      properties:
+        total_unique_visitors:
+          type: integer
+        total_new_user_unique_visitors:
+          type: integer
+      required:
+      - total_unique_visitors
+      - total_new_user_unique_visitors
+    GetCreatorCCUAnalyticsResponse:
+      type: object
+      properties:
+        aggregation_end_date_time:
+          type: string
+        aggregation_start_date_time:
+          type: string
+      required:
+      - aggregation_end_date_time
+      - aggregation_start_date_time
+    GetCreatorEngagementAnalyticsRequest:
+      type: object
+      properties:
+        filters:
+          oneOf:
+          - type: 'null'
+      required:
+      - filters
+    GetCreatorEngagementAnalyticsResponse:
+      type: object
+      properties:
+        aggregation_end_date_time:
+          type: string
+        aggregation_start_date_time:
+          type: string
+        granularity:
+          type: string
+        top_level_metrics:
+          type: object
+          additionalProperties:
+            type: integer
+        values:
+          items:
+            $ref: '#/components/schemas/CreatorAnalyticsValue'
+          type: array
+        total_retention:
+          oneOf:
+          - type: 'null'
+      required:
+      - aggregation_end_date_time
+      - aggregation_start_date_time
+      - granularity
+      - top_level_metrics
+      - values
+      - total_retention
+    GetWorldEngagementMetricsResponse:
+      type: object
+      properties:
+        aggregation_end_date_time:
+          type: string
+        aggregation_start_date_time:
+          type: string
+        values:
+          items:
+            $ref: '#/components/schemas/CreatorAnalyticsValue'
+          type: array
+      required:
+      - aggregation_end_date_time
+      - aggregation_start_date_time
+      - values
+  securitySchemes:
+    cookie_hr_s_production:
+      name: hr_s_production
+      in: cookie
+      description: null
+      type: apiKey

@@ -1,0 +1,86 @@
+openapi: 3.2.0
+info:
+  title: Create Discourse API
+  version: '1.0'
+tags:
+- name: discourse
+paths:
+  /api/discourse:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetDiscourseTopicResponse'
+      parameters:
+      - name: limit
+        in: query
+        required: true
+        schema:
+          type: integer
+      - name: category
+        in: query
+        schema:
+          type: string
+      summary: Get Discourse Topics
+      tags:
+      - discourse
+      operationId: get_discourse_topics
+components:
+  schemas:
+    DiscourseTopicPoster:
+      type: object
+      properties:
+        user_id:
+          type: string
+        username:
+          type: string
+        avatar_template:
+          type: string
+      required:
+      - user_id
+      - username
+      - avatar_template
+    GetDiscourseTopicResponse:
+      type: object
+      properties:
+        topics:
+          items:
+            $ref: '#/components/schemas/DiscourseTopic'
+          type: array
+      required:
+      - topics
+    DiscourseTopic:
+      type: object
+      properties:
+        id:
+          type: string
+        slug:
+          type: string
+        title:
+          type: string
+        created_at:
+          type: string
+        category_id:
+          type: string
+        poster:
+          $ref: '#/components/schemas/DiscourseTopicPoster'
+        like_count:
+          type: integer
+        posts_count:
+          type: integer
+      required:
+      - id
+      - slug
+      - title
+      - created_at
+      - category_id
+      - poster
+  securitySchemes:
+    cookie_hr_s_production:
+      name: hr_s_production
+      in: cookie
+      description: null
+      type: apiKey

@@ -1,0 +1,290 @@
+openapi: 3.2.0
+info:
+  title: Create Item Assets API
+  version: '1.0'
+tags:
+- name: item_assets
+paths:
+  /api/item_assets/{item_asset_id}/builds:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Page_SafeItemAssetBuild'
+      parameters:
+      - name: item_asset_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      - name: page
+        in: query
+        schema:
+          type: integer
+      security:
+      - cookie/hr_s_production: []
+      summary: Get Item Asset Builds
+      tags:
+      - item_assets
+      operationId: get_item_asset_builds
+    post:
+      responses:
+        '201':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateBuildResponse2'
+      parameters:
+      - name: item_asset_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Create Item Asset Build
+      tags:
+      - item_assets
+      operationId: create_item_asset_build
+  /api/item_assets/{item_asset_id}/builds/{build_number}/build:
+    put:
+      responses:
+        '204':
+          description: No content
+      parameters:
+      - name: item_asset_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: build_number
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      - name: unity_version
+        in: query
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Start Processing Item Asset Build
+      tags:
+      - item_assets
+      operationId: start_processing_item_asset_build
+  /api/item_assets/{item_asset_id}/builds/{build_number}/prebuilt:
+    put:
+      responses:
+        '204':
+          description: No content
+      parameters:
+      - name: item_asset_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: build_number
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Import Prebuilt Item Asset Build
+      tags:
+      - item_assets
+      operationId: import_prebuilt_item_asset_build
+      description: 'Alternative to `start_processing_item_asset_build`: the upload is a zip of an
+
+        already-built Unity `Build/Publish` folder, stored as the build output without
+
+        going through the Unity builder.'
+  /api/item_assets/{item_asset_id}/builds/{build_number}:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SafeItemAssetBuild'
+      parameters:
+      - name: item_asset_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: build_number
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Get Item Asset Build
+      tags:
+      - item_assets
+      operationId: get_item_asset_build
+components:
+  schemas:
+    Task:
+      type: object
+      properties:
+        name:
+          type: string
+        status:
+          type: string
+          enum:
+          - pending
+          - running
+          - completed
+          - error
+        message:
+          oneOf:
+          - type: string
+          - type: 'null'
+      required:
+      - name
+      - status
+    Page_SafeItemAssetBuild:
+      type: object
+      properties:
+        elements:
+          items:
+            $ref: '#/components/schemas/SafeItemAssetBuild'
+          type: array
+        has_more:
+          type: boolean
+        total:
+          oneOf:
+          - type: integer
+          - type: 'null'
+      required:
+      - elements
+      - has_more
+    CreateBuildResponse2:
+      type: object
+      properties:
+        build_number:
+          type: integer
+        upload_url:
+          type: string
+      required:
+      - build_number
+      - upload_url
+    SafeItemAssetBuildResult:
+      type: object
+      properties:
+        duration:
+          type: integer
+        template_version:
+          type: string
+        unity_version:
+          type: string
+        item_asset_manifest:
+          oneOf:
+          - $ref: '#/components/schemas/BuildResultItemAssetManifest'
+          - type: 'null'
+        pipeline:
+          items:
+            $ref: '#/components/schemas/Pipeline'
+          type: array
+      required:
+      - duration
+      - template_version
+      - unity_version
+    SafeItemAssetBuild:
+      type: object
+      properties:
+        id:
+          type: string
+        number:
+          type: integer
+        status:
+          type: string
+        updated_at:
+          oneOf:
+          - type: 'null'
+        created_at:
+          oneOf:
+          - type: 'null'
+        result:
+          oneOf:
+          - $ref: '#/components/schemas/SafeItemAssetBuildResult'
+          - type: 'null'
+      required:
+      - id
+      - number
+      - status
+      - updated_at
+      - created_at
+      - result
+    BuildResultItemAssetManifest:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+        serialization_format:
+          type: integer
+      required:
+      - id
+      - type
+    Pipeline:
+      type: object
+      properties:
+        name:
+          type: string
+        status:
+          type: string
+          enum:
+          - pending
+          - running
+          - completed
+          - error
+        tasks:
+          items:
+            $ref: '#/components/schemas/Task'
+          type: array
+        duration:
+          type: integer
+        message:
+          oneOf:
+          - type: string
+          - type: 'null'
+      required:
+      - name
+      - status
+      - tasks
+      - duration
+  securitySchemes:
+    cookie_hr_s_production:
+      name: hr_s_production
+      in: cookie
+      description: null
+      type: apiKey

@@ -1,0 +1,177 @@
+openapi: 3.2.0
+info:
+  title: Create World API
+  version: '1.0'
+tags:
+- name: world_api
+paths:
+  /api/worlds/{world_id}/token/temporary:
+    post:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorldApiKey'
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Issue Temporary World Api Key
+      tags:
+      - world_api
+      operationId: issue_temporary_world_api_key
+  /api/worlds/{world_id}/token/issue:
+    post:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorldApiKey'
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IssueWorldApiKeyRequest'
+        required: true
+      security:
+      - cookie/hr_s_production: []
+      summary: Issue World Api Key
+      tags:
+      - world_api
+      operationId: issue_world_api_key
+  /api/worlds/{world_id}/token/{token_id}/revoke:
+    post:
+      responses:
+        '204':
+          description: No content
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: token_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Revoke World Api Key
+      tags:
+      - world_api
+      operationId: revoke_world_api_key
+  /api/worlds/{world_id}/token:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Table_WorldApiKey'
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Get World Api Keys
+      tags:
+      - world_api
+      operationId: get_world_api_keys
+components:
+  schemas:
+    WorldApiKey:
+      type: object
+      properties:
+        world_id:
+          type: string
+        id:
+          type: string
+        scopes:
+          items:
+            type: string
+          type: array
+        issued_at:
+          type: string
+        expires_at:
+          type: string
+        token:
+          oneOf:
+          - type: string
+          - type: 'null'
+      required:
+      - world_id
+      - id
+      - scopes
+      - issued_at
+      - expires_at
+    Table_WorldApiKey:
+      type: object
+      properties:
+        elements:
+          items:
+            $ref: '#/components/schemas/WorldApiKey'
+          type: array
+        total:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+      required:
+      - elements
+      - total
+      - limit
+      - offset
+    IssueWorldApiKeyRequest:
+      type: object
+      properties:
+        scopes:
+          items:
+            type: string
+          type: array
+        expiration:
+          type: integer
+      required:
+      - scopes
+      - expiration
+  securitySchemes:
+    cookie_hr_s_production:
+      name: hr_s_production
+      in: cookie
+      description: null
+      type: apiKey

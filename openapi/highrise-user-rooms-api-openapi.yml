@@ -1,0 +1,139 @@
+openapi: 3.2.0
+info:
+  title: Create User Rooms API
+  version: '1.0'
+tags:
+- name: user-rooms
+paths:
+  /api/user-rooms:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Table_Room'
+      parameters:
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      - name: page
+        in: query
+        schema:
+          type: integer
+      security:
+      - cookie/hr_s_production: []
+      summary: Get User Rooms
+      tags:
+      - user-rooms
+      operationId: get_user_rooms
+  /api/user-rooms/{room_id}/bots/{bot_id}:
+    post:
+      responses:
+        '201':
+          description: No content
+      parameters:
+      - name: room_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: bot_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Assign Bot To Room
+      tags:
+      - user-rooms
+      operationId: assign_bot_to_room
+    delete:
+      responses:
+        '200':
+          description: No content
+      parameters:
+      - name: room_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: bot_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Remove Bot From Room
+      tags:
+      - user-rooms
+      operationId: remove_bot_from_room
+components:
+  schemas:
+    Table_Room:
+      type: object
+      properties:
+        elements:
+          items:
+            $ref: '#/components/schemas/Room'
+          type: array
+        total:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+      required:
+      - elements
+      - total
+      - limit
+      - offset
+    BotInfo2:
+      type: object
+      properties:
+        bot_id:
+          type: string
+        bot_name:
+          type: string
+      required:
+      - bot_id
+      - bot_name
+    Room:
+      type: object
+      properties:
+        room_id:
+          type: string
+        name:
+          type: string
+        created_at:
+          type: string
+        media_url:
+          oneOf:
+          - type: string
+          - type: 'null'
+        bots:
+          items:
+            $ref: '#/components/schemas/BotInfo2'
+          type: array
+      required:
+      - room_id
+      - name
+      - created_at
+  securitySchemes:
+    cookie_hr_s_production:
+      name: hr_s_production
+      in: cookie
+      description: null
+      type: apiKey

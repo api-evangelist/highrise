@@ -1,0 +1,198 @@
+openapi: 3.2.0
+info:
+  title: Create World Members API
+  version: '1.0'
+tags:
+- name: world_members
+paths:
+  /api/world/{world_id}/leave:
+    post:
+      responses:
+        '204':
+          description: No content
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Leave World
+      tags:
+      - world_members
+      operationId: leave_world
+  /api/world/{world_id}/members:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemberPage'
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      - name: page
+        in: query
+        schema:
+          type: integer
+      - name: username
+        in: query
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Get Members
+      tags:
+      - world_members
+      operationId: get_members
+  /api/world/{world_id}/members_paginated:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Table_User'
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      - name: page
+        in: query
+        schema:
+          type: integer
+      - name: username
+        in: query
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Get Members Paginated
+      tags:
+      - world_members
+      operationId: get_members_paginated
+  /api/world/{world_id}/members/{member_id}:
+    delete:
+      responses:
+        '204':
+          description: No content
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: member_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Remove World Member
+      tags:
+      - world_members
+      operationId: remove_world_member
+components:
+  schemas:
+    WorldRole:
+      type: object
+      properties:
+        name:
+          type: string
+        order:
+          type: integer
+        system_permissions:
+          type: integer
+        world_permissions:
+          items:
+            type: string
+          type: array
+      required:
+      - name
+      - order
+      - system_permissions
+      - world_permissions
+    User:
+      type: object
+      properties:
+        username:
+          type: string
+        primary_role:
+          oneOf:
+          - $ref: '#/components/schemas/WorldRole'
+          - type: 'null'
+        roles:
+          oneOf:
+          - type: 'null'
+        avatar_key:
+          oneOf:
+          - type: string
+          - type: 'null'
+        icon_key:
+          oneOf:
+          - type: string
+          - type: 'null'
+      required:
+      - username
+    Table_User:
+      type: object
+      properties:
+        elements:
+          items:
+            $ref: '#/components/schemas/User'
+          type: array
+        total:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+      required:
+      - elements
+      - total
+      - limit
+      - offset
+    MemberPage:
+      type: object
+      properties:
+        elements:
+          items:
+            $ref: '#/components/schemas/User'
+          type: array
+        has_more:
+          type: boolean
+      required:
+      - elements
+      - has_more
+  securitySchemes:
+    cookie_hr_s_production:
+      name: hr_s_production
+      in: cookie
+      description: null
+      type: apiKey

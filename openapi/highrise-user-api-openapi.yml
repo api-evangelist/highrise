@@ -1,0 +1,68 @@
+openapi: 3.2.0
+info:
+  title: Create User API
+  version: '1.0'
+tags:
+- name: User
+paths:
+  /api/user/account:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUserFinancialProfileResponse'
+      parameters:
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Get User Financial Profile
+      tags:
+      - User
+      operationId: get_user_financial_profile
+components:
+  schemas:
+    GetUserFinancialProfileResponse:
+      type: object
+      properties:
+        email:
+          oneOf:
+          - type: string
+          - type: 'null'
+        eth_wallet:
+          oneOf:
+          - type: string
+          - type: 'null'
+        stripe_connected:
+          type: boolean
+        tipalti_connected:
+          type: boolean
+        gold_balance:
+          type: integer
+        bubble_balance:
+          type: integer
+        cash_balance:
+          type: integer
+        earned_gold_balance:
+          type: integer
+        ad_credit_balance:
+          type: integer
+        payouts:
+          type: integer
+        is_adult:
+          type: boolean
+        is_imx_connected:
+          type: boolean
+        is_api_token_enabled:
+          type: boolean
+  securitySchemes:
+    cookie_hr_s_production:
+      name: hr_s_production
+      in: cookie
+      description: null
+      type: apiKey

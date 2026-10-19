@@ -1,0 +1,76 @@
+openapi: 3.2.0
+info:
+  title: Create Upload API
+  version: '1.0'
+tags:
+- name: Upload
+paths:
+  /api/upload:
+    post:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatePresignedUploadResponse'
+      parameters:
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePresignedUploadRequest'
+        required: true
+      security:
+      - cookie/hr_s_production: []
+      summary: Create Presigned Upload
+      tags:
+      - Upload
+      operationId: create_presigned_upload
+components:
+  schemas:
+    FileMetadata:
+      type: object
+      properties:
+        mime:
+          type: string
+        format:
+          type: string
+        name:
+          oneOf:
+          - type: string
+          - type: 'null'
+      required:
+      - mime
+      - format
+    CreatePresignedUploadResponse:
+      type: object
+      properties:
+        presigned_urls:
+          items:
+            type: string
+          type: array
+      required:
+      - presigned_urls
+    CreatePresignedUploadRequest:
+      type: object
+      properties:
+        file_metadata:
+          items:
+            $ref: '#/components/schemas/FileMetadata'
+          type: array
+        upload_key:
+          type: string
+      required:
+      - file_metadata
+      - upload_key
+  securitySchemes:
+    cookie_hr_s_production:
+      name: hr_s_production
+      in: cookie
+      description: null
+      type: apiKey

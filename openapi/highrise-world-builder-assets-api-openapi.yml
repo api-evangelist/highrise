@@ -1,0 +1,892 @@
+openapi: 3.2.0
+info:
+  title: Create World Builder Assets API
+  version: '1.0'
+tags:
+- name: world_builder_assets
+paths:
+  /api/world_builder_assets:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Page_StoreAsset'
+      parameters:
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      - name: sort
+        in: query
+        schema:
+          type: integer
+      - name: category
+        in: query
+        schema:
+          type: string
+      - name: query
+        in: query
+        schema:
+          type: string
+      - name: owner_id
+        in: query
+        schema:
+          type: string
+      - name: has_scripts
+        in: query
+        schema:
+          type: string
+      - name: is_bundle
+        in: query
+        schema:
+          type: string
+      - name: min_price
+        in: query
+        schema:
+          type: string
+      - name: max_price
+        in: query
+        schema:
+          type: string
+      - name: page
+        in: query
+        schema:
+          type: integer
+      security:
+      - cookie/hr_s_production: []
+      summary: Get Store Assets
+      tags:
+      - world_builder_assets
+      operationId: get_store_assets
+    post:
+      responses:
+        '201':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateWorldBuilderAssetResponse'
+      parameters:
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateWorldBuilderAssetRequest'
+        required: true
+      security:
+      - cookie/hr_s_production: []
+      summary: Create Store Asset
+      tags:
+      - world_builder_assets
+      operationId: create_store_asset
+  /api/world_builder_assets/{asset_id}:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetStoreAssetResponse'
+      parameters:
+      - name: asset_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Get Store Asset
+      tags:
+      - world_builder_assets
+      operationId: get_store_asset
+    put:
+      responses:
+        '200':
+          description: No content
+      parameters:
+      - name: asset_id
+        in: path
+        required: true
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateWorldBuilderAssetRequest'
+        required: true
+      security:
+      - cookie/hr_s_production: []
+      summary: Update Store Asset
+      tags:
+      - world_builder_assets
+      operationId: update_store_asset
+    delete:
+      responses:
+        '200':
+          description: No content
+      parameters:
+      - name: asset_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Delete Store Asset
+      tags:
+      - world_builder_assets
+      operationId: delete_store_asset
+  /api/world_builder_assets/user:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Table_StoreAsset'
+      parameters:
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      - name: status
+        in: query
+        schema:
+          type: string
+      - name: sort
+        in: query
+        schema:
+          type: integer
+      - name: page
+        in: query
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        schema:
+          type: integer
+      security:
+      - cookie/hr_s_production: []
+      summary: Get My Store Assets
+      tags:
+      - world_builder_assets
+      operationId: get_my_store_assets
+  /api/world_builder_assets/{asset_id}/create_presigned_urls:
+    post:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatePresignedUploadResponse'
+      parameters:
+      - name: asset_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePresignedUploadRequest'
+        required: true
+      security:
+      - cookie/hr_s_production: []
+      summary: Create Presigned Upload Urls
+      tags:
+      - world_builder_assets
+      operationId: create_presigned_upload_urls
+  /api/world_builder_assets/{asset_id}/asset_uploaded:
+    post:
+      responses:
+        '200':
+          description: No content
+        '400':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: asset_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetAssetReadyForReviewRequest'
+        required: true
+      security:
+      - cookie/hr_s_production: []
+      summary: Set Asset Ready For Review
+      tags:
+      - world_builder_assets
+      operationId: set_asset_ready_for_review
+  /api/world_builder_assets/{asset_id}/publish:
+    post:
+      responses:
+        '200':
+          description: No content
+        '400':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: asset_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Publish Asset
+      tags:
+      - world_builder_assets
+      operationId: publish_asset
+  /api/world_builder_assets/{asset_id}/like:
+    post:
+      responses:
+        '200':
+          description: No content
+      parameters:
+      - name: asset_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LikeStoreAssetRequest'
+        required: true
+      security:
+      - cookie/hr_s_production: []
+      summary: Like Store Asset
+      tags:
+      - world_builder_assets
+      operationId: like_store_asset
+  /api/world_builder_assets/{asset_id}/check:
+    get:
+      responses:
+        '200':
+          description: No content
+      parameters:
+      - name: asset_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Check If Can Use World Builder Asset
+      tags:
+      - world_builder_assets
+      operationId: check_if_can_use_world_builder_asset
+  /api/world_builder_assets/{asset_id}/download:
+    post:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetDownloadLinkResponse'
+      parameters:
+      - name: asset_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Get Store Asset Download Link
+      tags:
+      - world_builder_assets
+      operationId: get_store_asset_download_link
+  /api/world_builder_assets/{asset_id}/purchase:
+    post:
+      responses:
+        '200':
+          description: No content
+      parameters:
+      - name: asset_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Purchase Store Asset
+      tags:
+      - world_builder_assets
+      operationId: purchase_store_asset
+  /api/world_builder_assets/{asset_id}/all:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAssetsAnalyticsResponse'
+      parameters:
+      - name: asset_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: aggregation_start_date_time
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: aggregation_end_date_time
+        in: query
+        required: true
+        schema:
+          type: string
+      summary: Get Asset Analytics
+      tags:
+      - world_builder_assets
+      operationId: get_asset_analytics
+components:
+  schemas:
+    CreatePresignedUploadRequest:
+      type: object
+      properties:
+        file_metadata:
+          items:
+            $ref: '#/components/schemas/FileMetadata'
+          type: array
+        upload_key:
+          type: string
+      required:
+      - file_metadata
+      - upload_key
+    CreateWorldBuilderAssetResponse:
+      type: object
+      properties:
+        asset:
+          $ref: '#/components/schemas/StoreAsset'
+      required:
+      - asset
+    SetAssetReadyForReviewRequest:
+      type: object
+      properties:
+        filename:
+          type: string
+        main_asset_guid:
+          oneOf:
+          - type: string
+          - type: 'null'
+      required:
+      - filename
+    Table_StoreAsset:
+      type: object
+      properties:
+        elements:
+          items:
+            $ref: '#/components/schemas/StoreAsset'
+          type: array
+        total:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+      required:
+      - elements
+      - total
+      - limit
+      - offset
+    StoreAsset:
+      type: object
+      properties:
+        _id:
+          type: string
+        name:
+          type: string
+        slug:
+          type: string
+        counters:
+          $ref: '#/components/schemas/AssetCounters'
+        is_bundle:
+          type: boolean
+        price:
+          oneOf:
+          - type: integer
+          - type: 'null'
+        has_scripts:
+          type: boolean
+        main_asset_guid:
+          oneOf:
+          - type: string
+          - type: 'null'
+        category:
+          oneOf:
+          - type: string
+          - type: 'null'
+        created_at:
+          oneOf:
+          - type: string
+          - type: 'null'
+        updated_at:
+          oneOf:
+          - type: string
+          - type: 'null'
+        status:
+          oneOf:
+          - type: string
+          - type: 'null'
+        is_private:
+          type: boolean
+        images:
+          oneOf:
+          - $ref: '#/components/schemas/AssetImages'
+          - type: 'null'
+        owner:
+          oneOf:
+          - $ref: '#/components/schemas/AssetOwner'
+          - type: 'null'
+        user_info:
+          oneOf:
+          - $ref: '#/components/schemas/AssetUserInfo'
+          - type: 'null'
+        icon_url:
+          oneOf:
+          - type: string
+          - type: 'null'
+        image_urls:
+          oneOf:
+          - type: 'null'
+      required:
+      - _id
+      - name
+      - slug
+      - counters
+    ShareList:
+      type: object
+      properties:
+        usernames:
+          items:
+            type: string
+          type: array
+    AssetImages:
+      type: object
+      properties:
+        thumbnail_2d_url:
+          oneOf:
+          - type: string
+          - type: 'null'
+        image_2d_url:
+          oneOf:
+          - type: string
+          - type: 'null'
+    GetDownloadLinkResponse:
+      type: object
+      properties:
+        download_link:
+          type: string
+      required:
+      - download_link
+    LikeStoreAssetRequest:
+      type: object
+      properties:
+        liked:
+          type: boolean
+      required:
+      - liked
+    AssetSharee:
+      type: object
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        avatar_key:
+          oneOf:
+          - type: string
+          - type: 'null'
+        icon_key:
+          oneOf:
+          - type: string
+          - type: 'null'
+      required:
+      - id
+      - username
+    CreatePresignedUploadResponse:
+      type: object
+      properties:
+        presigned_urls:
+          items:
+            type: string
+          type: array
+      required:
+      - presigned_urls
+    UpdateWorldBuilderAssetRequest:
+      type: object
+      properties:
+        name:
+          oneOf:
+          - type: string
+          - type: 'null'
+        category:
+          oneOf:
+          - type: string
+          - type: 'null'
+        description:
+          oneOf:
+          - type: string
+          - type: 'null'
+        keywords:
+          oneOf:
+          - type: 'null'
+        images:
+          oneOf:
+          - $ref: '#/components/schemas/AssetImages'
+          - type: 'null'
+        price:
+          oneOf:
+          - type: integer
+          - type: 'null'
+        asset_key:
+          oneOf:
+          - type: string
+          - type: 'null'
+        has_scripts:
+          oneOf:
+          - type: boolean
+          - type: 'null'
+        main_asset_guid:
+          oneOf:
+          - type: string
+          - type: 'null'
+        is_bundle:
+          oneOf:
+          - type: boolean
+          - type: 'null'
+        icon_url:
+          oneOf:
+          - type: string
+          - type: 'null'
+        image_urls:
+          oneOf:
+          - type: 'null'
+        is_private:
+          oneOf:
+          - type: boolean
+          - type: 'null'
+        shared_with:
+          oneOf:
+          - $ref: '#/components/schemas/ShareList'
+          - type: 'null'
+    FileMetadata:
+      type: object
+      properties:
+        mime:
+          type: string
+        format:
+          type: string
+        name:
+          oneOf:
+          - type: string
+          - type: 'null'
+      required:
+      - mime
+      - format
+    CreateWorldBuilderAssetRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        category:
+          type: string
+          enum:
+          - structure
+          - landscape
+          - furniture
+          - light
+          - vehicle
+          - clothing
+          - creatures
+          - dev_modules
+          - materials
+          - templates
+          - vfx
+          - animations
+          - gui
+          - props
+        keywords:
+          items:
+            type: string
+          type: array
+        description:
+          oneOf:
+          - type: string
+          - type: 'null'
+        price:
+          oneOf:
+          - type: integer
+          - type: 'null'
+        is_bundle:
+          type: boolean
+      required:
+      - name
+      - category
+    AssetOwner:
+      type: object
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        avatar_key:
+          oneOf:
+          - type: string
+          - type: 'null'
+        icon_key:
+          oneOf:
+          - type: string
+          - type: 'null'
+      required:
+      - id
+      - username
+    AssetUserInfo:
+      type: object
+      properties:
+        liked:
+          oneOf:
+          - type: boolean
+          - type: 'null'
+        purchased:
+          oneOf:
+          - type: boolean
+          - type: 'null'
+        viewed:
+          oneOf:
+          - type: boolean
+          - type: 'null'
+        downloaded:
+          oneOf:
+          - type: boolean
+          - type: 'null'
+    GetAssetsAnalyticsResponse:
+      type: object
+      properties:
+        granularity:
+          type: string
+        analytics:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/AssetAnalytic'
+      required:
+      - granularity
+      - analytics
+    AssetAnalytic:
+      type: object
+      properties:
+        net_revenue:
+          type: integer
+      required:
+      - net_revenue
+    AssetCounters:
+      type: object
+      properties:
+        downloads:
+          type: integer
+        likes:
+          type: integer
+        views:
+          type: integer
+    Page_StoreAsset:
+      type: object
+      properties:
+        elements:
+          items:
+            $ref: '#/components/schemas/StoreAsset'
+          type: array
+        has_more:
+          type: boolean
+        total:
+          oneOf:
+          - type: integer
+          - type: 'null'
+      required:
+      - elements
+      - has_more
+    StoreAssetItem:
+      type: object
+      properties:
+        _id:
+          type: string
+        name:
+          type: string
+        slug:
+          type: string
+        sku:
+          type: string
+        asset_type:
+          type: string
+        category:
+          type: string
+          enum:
+          - structure
+          - landscape
+          - furniture
+          - light
+          - vehicle
+          - clothing
+          - creatures
+          - dev_modules
+          - materials
+          - templates
+          - vfx
+          - animations
+          - gui
+          - props
+        created_at:
+          type: string
+        updated_at:
+          type: string
+        counters:
+          $ref: '#/components/schemas/AssetCounters'
+        keywords:
+          items:
+            type: string
+          type: array
+        price:
+          oneOf:
+          - type: integer
+          - type: 'null'
+        description:
+          oneOf:
+          - type: string
+          - type: 'null'
+        asset_key:
+          oneOf:
+          - type: string
+          - type: 'null'
+        status:
+          oneOf:
+          - type: string
+          - type: 'null'
+        is_private:
+          type: boolean
+        user_info:
+          oneOf:
+          - $ref: '#/components/schemas/AssetUserInfo'
+          - type: 'null'
+        images:
+          oneOf:
+          - $ref: '#/components/schemas/AssetImages'
+          - type: 'null'
+        owner:
+          oneOf:
+          - $ref: '#/components/schemas/AssetOwner'
+          - type: 'null'
+        sharees:
+          items:
+            $ref: '#/components/schemas/AssetSharee'
+          type: array
+        has_scripts:
+          type: boolean
+        main_asset_guid:
+          oneOf:
+          - type: string
+          - type: 'null'
+        is_bundle:
+          type: boolean
+        icon_url:
+          oneOf:
+          - type: string
+          - type: 'null'
+        image_urls:
+          oneOf:
+          - type: 'null'
+      required:
+      - _id
+      - name
+      - slug
+      - sku
+      - asset_type
+      - category
+      - created_at
+      - updated_at
+      - counters
+      - keywords
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+      - message
+    GetStoreAssetResponse:
+      type: object
+      properties:
+        asset:
+          $ref: '#/components/schemas/StoreAssetItem'
+      required:
+      - asset
+  securitySchemes:
+    cookie_hr_s_production:
+      name: hr_s_production
+      in: cookie
+      description: null
+      type: apiKey

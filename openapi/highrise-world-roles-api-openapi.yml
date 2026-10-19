@@ -1,0 +1,375 @@
+openapi: 3.2.0
+info:
+  title: Create World Roles API
+  version: '1.0'
+tags:
+- name: world_roles
+paths:
+  /api/world/{world_id}/roles:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Table_WorldRoleInfo'
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      - name: page
+        in: query
+        schema:
+          type: integer
+      security:
+      - cookie/hr_s_production: []
+      summary: Get World Roles
+      tags:
+      - world_roles
+      operationId: get_world_roles
+      description: Get all roles for a specific world.
+    post:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoleConfig'
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrUpdateRoleRequest'
+        required: true
+      security:
+      - cookie/hr_s_production: []
+      summary: Create Role
+      tags:
+      - world_roles
+      operationId: create_role
+      description: Create a new role.
+  /api/world/{world_id}/roles/{role_id}:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoleConfig'
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: role_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Get Role Config
+      tags:
+      - world_roles
+      operationId: get_role_config
+      description: Get configuration and permissions for a specific role.
+    put:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoleConfig'
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: role_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrUpdateRoleRequest'
+        required: true
+      security:
+      - cookie/hr_s_production: []
+      summary: Update Role
+      tags:
+      - world_roles
+      operationId: update_role
+      description: Update an existing role.
+  /api/world/{world_id}/roles/{role_id}/members:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Table_RoleUser'
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: role_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      - name: page
+        in: query
+        schema:
+          type: integer
+      security:
+      - cookie/hr_s_production: []
+      summary: Get Role Members
+      tags:
+      - world_roles
+      operationId: get_role_members
+      description: Get all members of a specific role.
+  /api/world/{world_id}/roles/{role_id}/add-user:
+    post:
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: role_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddRemoveRoleRequest'
+        required: true
+      security:
+      - cookie/hr_s_production: []
+      summary: Add Role To User
+      tags:
+      - world_roles
+      operationId: add_role_to_user
+      description: Add a role to a user.
+  /api/world/{world_id}/roles/{role_id}/remove-user:
+    delete:
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: role_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddRemoveRoleRequest'
+        required: true
+      security:
+      - cookie/hr_s_production: []
+      summary: Remove Role From User
+      tags:
+      - world_roles
+      operationId: remove_role_from_user
+      description: Remove a role from a user.
+components:
+  schemas:
+    Table_RoleUser:
+      type: object
+      properties:
+        elements:
+          items:
+            $ref: '#/components/schemas/RoleUser'
+          type: array
+        total:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+      required:
+      - elements
+      - total
+      - limit
+      - offset
+    AddRemoveRoleRequest:
+      type: object
+      properties:
+        user_id:
+          type: string
+      required:
+      - user_id
+    CreateOrUpdateRoleRequest:
+      type: object
+      properties:
+        name:
+          oneOf:
+          - type: string
+          - type: 'null'
+        order:
+          oneOf:
+          - type: integer
+          - type: 'null'
+        system_permissions:
+          oneOf:
+          - type: 'null'
+    WorldRoleInfo:
+      type: object
+      properties:
+        name:
+          type: string
+        order:
+          type: integer
+        type:
+          type: integer
+        member_count:
+          type: integer
+        created_at:
+          type: string
+        updated_at:
+          type: string
+      required:
+      - name
+      - order
+      - type
+      - member_count
+      - created_at
+      - updated_at
+    RoleConfig:
+      type: object
+      properties:
+        name:
+          type: string
+        order:
+          type: integer
+        type:
+          type: integer
+        system_permissions:
+          items:
+            type: integer
+          type: array
+        world_permissions:
+          items:
+            type: integer
+          type: array
+        created_at:
+          type: string
+        updated_at:
+          type: string
+      required:
+      - name
+      - order
+      - type
+      - system_permissions
+      - world_permissions
+      - created_at
+      - updated_at
+    Table_WorldRoleInfo:
+      type: object
+      properties:
+        elements:
+          items:
+            $ref: '#/components/schemas/WorldRoleInfo'
+          type: array
+        total:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+      required:
+      - elements
+      - total
+      - limit
+      - offset
+    RoleUser:
+      type: object
+      properties:
+        username:
+          type: string
+        avatar_key:
+          oneOf:
+          - type: string
+          - type: 'null'
+        icon_key:
+          oneOf:
+          - type: string
+          - type: 'null'
+      required:
+      - username
+  securitySchemes:
+    cookie_hr_s_production:
+      name: hr_s_production
+      in: cookie
+      description: null
+      type: apiKey

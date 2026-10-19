@@ -1,0 +1,583 @@
+openapi: 3.2.0
+info:
+  title: Create Ad Campaigns API
+  version: '1.0'
+tags:
+- name: ad-campaigns
+paths:
+  /api/ad-campaigns/metadata:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAdCampaignsMetadataResponse'
+      summary: Get Ad Campaigns Metadata
+      tags:
+      - ad-campaigns
+      operationId: get_ad_campaigns_metadata
+  /api/ad-campaigns/settings:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAdCampaignSettingsResponse'
+      summary: Get Ad Campaign Settings
+      tags:
+      - ad-campaigns
+      operationId: get_ad_campaign_settings
+  /api/ad-campaigns:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Table_AdCampaign'
+      parameters:
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      - name: world_id
+        in: query
+        schema:
+          type: string
+      - name: campaign_id
+        in: query
+        schema:
+          type: string
+      - name: sort
+        in: query
+        schema:
+          type: integer
+      - name: page
+        in: query
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        schema:
+          type: integer
+      security:
+      - cookie/hr_s_production: []
+      summary: Fetch Ad Campaigns
+      tags:
+      - ad-campaigns
+      operationId: fetch_ad_campaigns
+    post:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateAdCampaignResponse'
+      parameters:
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAdCampaignRequest'
+        required: true
+      security:
+      - cookie/hr_s_production: []
+      summary: Create Ad Campaign
+      tags:
+      - ad-campaigns
+      operationId: create_ad_campaign
+  /api/ad-campaigns/analytics/campaign:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListAdCampaignAnalyticsResponse'
+      parameters:
+      - name: requester_id
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: campaign_id
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: start_date
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      - name: end_date
+        in: query
+        schema:
+          type: string
+      - name: world_id
+        in: query
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: List Ad Campaign Analytics
+      tags:
+      - ad-campaigns
+      operationId: list_ad_campaign_analytics
+  /api/ad-campaigns/analytics/world:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListAdWorldAnalyticsResponse'
+      parameters:
+      - name: requester_id
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: world_id
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: start_date
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      - name: end_date
+        in: query
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: List Ad World Campaign Analytics
+      tags:
+      - ad-campaigns
+      operationId: list_ad_world_campaign_analytics
+  /api/ad-campaigns/edit:
+    post:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SetAdCampaignResponse'
+      parameters:
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      - name: world_id
+        in: query
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetAdCampaignRequest'
+        required: true
+      security:
+      - cookie/hr_s_production: []
+      summary: Set Ad Campaign
+      tags:
+      - ad-campaigns
+      operationId: set_ad_campaign
+  /api/ad-campaigns/deposit:
+    post:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DepositToAdCampaignResponse'
+      parameters:
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      - name: world_id
+        in: query
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DepositToAdCampaignRequest'
+        required: true
+      security:
+      - cookie/hr_s_production: []
+      summary: Deposit To Ad Campaign
+      tags:
+      - ad-campaigns
+      operationId: deposit_to_ad_campaign
+  /api/ad-campaigns/withdraw:
+    post:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WithdrawFromAdCampaignResponse'
+      parameters:
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      - name: world_id
+        in: query
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WithdrawFromAdCampaignRequest'
+        required: true
+      security:
+      - cookie/hr_s_production: []
+      summary: Withdraw From Ad Campaign
+      tags:
+      - ad-campaigns
+      operationId: withdraw_from_ad_campaign
+components:
+  schemas:
+    AdCampaign:
+      type: object
+      properties:
+        campaign_id:
+          type: string
+        creator_id:
+          type: string
+        name:
+          type: string
+        start_date:
+          oneOf:
+          - type: 'null'
+        end_date:
+          oneOf:
+          - type: 'null'
+        world_id:
+          oneOf:
+          - type: string
+          - type: 'null'
+        feed_placement:
+          oneOf:
+          - type: boolean
+          - type: 'null'
+        file_keys:
+          items:
+            type: string
+          type: array
+        caption:
+          oneOf:
+          - type: string
+          - type: 'null'
+        active:
+          oneOf:
+          - type: boolean
+          - type: 'null'
+        budget:
+          type: object
+          additionalProperties:
+            type: integer
+        banned:
+          type: boolean
+        targeting:
+          oneOf:
+          - type: 'null'
+        bidding:
+          oneOf:
+          - type: 'null'
+        is_admin_campaign:
+          oneOf:
+          - type: boolean
+          - type: 'null'
+        connected_content_type:
+          oneOf:
+          - type: string
+          - type: 'null'
+        connected_id:
+          oneOf:
+          - type: string
+          - type: 'null'
+        call_to_action:
+          oneOf:
+          - type: string
+          - type: 'null'
+        thumbnail_url:
+          oneOf:
+          - type: string
+          - type: 'null'
+        author_name_override:
+          oneOf:
+          - type: string
+          - type: 'null'
+        hide_if_visited_within_hours:
+          type: integer
+      required:
+      - campaign_id
+      - creator_id
+      - name
+      - start_date
+      - end_date
+    WithdrawFromAdCampaignResponse:
+      type: object
+      properties:
+        wallet:
+          type: object
+          additionalProperties:
+            type: integer
+      required:
+      - wallet
+    GetAdCampaignsMetadataResponse:
+      type: object
+      properties:
+        average_prices:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/PricePoint'
+      required:
+      - average_prices
+    CreateAdCampaignResponse:
+      type: object
+      properties:
+        campaign_id:
+          type: string
+      required:
+      - campaign_id
+    CurrencyCost:
+      type: object
+      properties:
+        customCurrencyId:
+          oneOf:
+          - type: string
+          - type: 'null'
+    DepositToAdCampaignRequest:
+      type: object
+      properties:
+        requester_id:
+          type: string
+        campaign_id:
+          type: string
+        cost:
+          $ref: '#/components/schemas/CurrencyCost'
+        funding_source:
+          type: string
+      required:
+      - requester_id
+      - campaign_id
+      - cost
+    SetAdCampaignRequest:
+      type: object
+      properties:
+        requester_id:
+          type: string
+        campaign_id:
+          type: string
+        name:
+          oneOf:
+          - type: string
+          - type: 'null'
+        start_date:
+          oneOf:
+          - type: 'null'
+        end_date:
+          oneOf:
+          - type: 'null'
+        file_keys:
+          items:
+            type: string
+          type: array
+        caption:
+          oneOf:
+          - type: string
+          - type: 'null'
+        active:
+          oneOf:
+          - type: boolean
+          - type: 'null'
+        feed_placement:
+          oneOf:
+          - type: boolean
+          - type: 'null'
+        targeting:
+          oneOf:
+          - type: 'null'
+        bidding:
+          oneOf:
+          - type: 'null'
+        connected_content_type:
+          oneOf:
+          - type: string
+          - type: 'null'
+        connected_id:
+          oneOf:
+          - type: string
+          - type: 'null'
+        call_to_action:
+          oneOf:
+          - type: string
+          - type: 'null'
+        thumbnail_url:
+          oneOf:
+          - type: string
+          - type: 'null'
+        author_name_override:
+          oneOf:
+          - type: string
+          - type: 'null'
+        hide_if_visited_within_hours:
+          oneOf:
+          - type: integer
+          - type: 'null'
+      required:
+      - requester_id
+      - campaign_id
+    ListAdCampaignAnalyticsResponse:
+      type: object
+      properties: {}
+    DepositToAdCampaignResponse:
+      type: object
+      properties:
+        wallet:
+          type: object
+          additionalProperties:
+            type: integer
+      required:
+      - wallet
+    ListAdWorldAnalyticsResponse:
+      type: object
+      properties: {}
+    WithdrawFromAdCampaignRequest:
+      type: object
+      properties:
+        requester_id:
+          type: string
+        campaign_id:
+          type: string
+        cost:
+          $ref: '#/components/schemas/CurrencyCost'
+        funding_source:
+          type: string
+      required:
+      - requester_id
+      - campaign_id
+      - cost
+    GetAdCampaignSettingsResponse:
+      type: object
+      properties:
+        ad_price_directory:
+          type: integer
+        ad_price_timeline:
+          type: integer
+        ad_credit_price_directory:
+          type: integer
+        ad_credit_price_timeline:
+          type: integer
+      required:
+      - ad_price_directory
+      - ad_price_timeline
+      - ad_credit_price_directory
+      - ad_credit_price_timeline
+    Table_AdCampaign:
+      type: object
+      properties:
+        elements:
+          items:
+            $ref: '#/components/schemas/AdCampaign'
+          type: array
+        total:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+      required:
+      - elements
+      - total
+      - limit
+      - offset
+    CreateAdCampaignRequest:
+      type: object
+      properties:
+        requester_id:
+          type: string
+        name:
+          type: string
+        start_date:
+          oneOf:
+          - type: 'null'
+        end_date:
+          oneOf:
+          - type: 'null'
+        world_id:
+          oneOf:
+          - type: string
+          - type: 'null'
+        feed_placement:
+          oneOf:
+          - type: boolean
+          - type: 'null'
+        file_keys:
+          items:
+            type: string
+          type: array
+        caption:
+          oneOf:
+          - type: string
+          - type: 'null'
+        is_admin_campaign:
+          oneOf:
+          - type: boolean
+          - type: 'null'
+      required:
+      - requester_id
+      - name
+    PricePoint:
+      type: object
+      properties:
+        directory:
+          type: integer
+        timeline:
+          type: integer
+      required:
+      - directory
+      - timeline
+    SetAdCampaignResponse:
+      type: object
+      properties: {}
+  securitySchemes:
+    cookie_hr_s_production:
+      name: hr_s_production
+      in: cookie
+      description: null
+      type: apiKey

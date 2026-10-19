@@ -1,0 +1,71 @@
+openapi: 3.2.0
+info:
+  title: Create Lookup Content API
+  version: '1.0'
+tags:
+- name: lookup-content
+paths:
+  /api/lookup-content:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetLookupContentResponse'
+      parameters:
+      - name: content_id
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: content_type
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      - name: limit
+        in: query
+        schema:
+          type: integer
+      security:
+      - cookie/hr_s_production: []
+      summary: Get Lookup Content
+      tags:
+      - lookup-content
+      operationId: get_lookup_content
+components:
+  schemas:
+    GetLookupContentResponse:
+      type: object
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/LookupContent'
+          type: array
+      required:
+      - items
+    LookupContent:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        image:
+          type: string
+      required:
+      - id
+      - title
+      - image
+  securitySchemes:
+    cookie_hr_s_production:
+      name: hr_s_production
+      in: cookie
+      description: null
+      type: apiKey

@@ -1,0 +1,424 @@
+openapi: 3.2.0
+info:
+  title: Create Auth API
+  version: '1.0'
+tags:
+- name: Auth
+paths:
+  /api/login:
+    post:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserInfo'
+      parameters:
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+        required: true
+      security:
+      - cookie/hr_s_production: []
+      summary: Login
+      tags:
+      - Auth
+      operationId: login
+  /api/login_web:
+    post:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserInfoWeb'
+      parameters:
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+        required: true
+      security:
+      - cookie/hr_s_production: []
+      summary: Login Web
+      tags:
+      - Auth
+      operationId: login_web
+  /api/oauth_login:
+    post:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserInfoWeb'
+      parameters:
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OauthLoginRequest'
+        required: true
+      security:
+      - cookie/hr_s_production: []
+      summary: Oauth Login
+      tags:
+      - Auth
+      operationId: oauth_login
+  /api/login_discourse:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiscourseResponse'
+        '400':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: sso
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: sig
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: user_id
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: username
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: email
+        in: query
+        required: true
+        schema:
+          type: string
+      summary: Login Discourse
+      tags:
+      - Auth
+      operationId: login_discourse
+  /api/logout:
+    post:
+      responses:
+        '200':
+          description: No content
+      parameters:
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Logout
+      tags:
+      - Auth
+      operationId: logout
+  /api/whoami:
+    post:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserInfo'
+        '401':
+          description: No content
+      parameters:
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Whoami
+      tags:
+      - Auth
+      operationId: whoami
+  /api/whoami_web:
+    post:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserInfoWeb'
+        '401':
+          description: No content
+      parameters:
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Whoami Web
+      tags:
+      - Auth
+      operationId: whoami_web
+  /api/set_email:
+    post:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SetUserEmailResponse'
+        '400':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetUserEmailRequest'
+        required: true
+      security:
+      - cookie/hr_s_production: []
+      summary: Set Email
+      tags:
+      - Auth
+      operationId: set_email
+components:
+  schemas:
+    OutfitItemColors:
+      type: object
+      properties:
+        linked_colors:
+          type: string
+    NFTMetadata:
+      type: object
+      properties:
+        token_id:
+          type: string
+        contract:
+          type: string
+      required:
+      - token_id
+      - contract
+    OauthLoginRequest:
+      type: object
+      properties:
+        type:
+          type: string
+        token:
+          type: string
+      required:
+      - type
+      - token
+    LoginRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        totp:
+          oneOf:
+          - type: string
+          - type: 'null'
+        hotp:
+          oneOf:
+          - type: string
+          - type: 'null'
+        turnstile_token:
+          oneOf:
+          - type: string
+          - type: 'null'
+      required:
+      - username
+      - password
+    UserInfo:
+      type: object
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        outfit:
+          items:
+            $ref: '#/components/schemas/Clothing'
+          type: array
+        email:
+          oneOf:
+          - type: string
+          - type: 'null'
+        privilege_level:
+          oneOf:
+          - type: string
+          - type: 'null'
+        avatar_key:
+          oneOf:
+          - type: string
+          - type: 'null'
+        icon_key:
+          oneOf:
+          - type: string
+          - type: 'null'
+        pet:
+          oneOf:
+          - $ref: '#/components/schemas/PetInfo'
+          - type: 'null'
+      required:
+      - id
+      - username
+      - outfit
+    DiscourseResponse:
+      type: object
+      properties:
+        redirect_url:
+          type: string
+      required:
+      - redirect_url
+    UserInfoWeb:
+      type: object
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        email:
+          oneOf:
+          - type: string
+          - type: 'null'
+        privilege_level:
+          oneOf:
+          - type: string
+          - type: 'null'
+        avatar_key:
+          oneOf:
+          - type: string
+          - type: 'null'
+        icon_key:
+          oneOf:
+          - type: string
+          - type: 'null'
+        is_age_verified_above_18:
+          type: boolean
+      required:
+      - id
+      - username
+    SetUserEmailRequest:
+      type: object
+      properties:
+        email:
+          type: string
+      required:
+      - email
+    Clothing:
+      type: object
+      properties:
+        descriptor_id:
+          type: string
+        active_palette:
+          type: integer
+        account_bound:
+          type: boolean
+        nft_metadata:
+          oneOf:
+          - $ref: '#/components/schemas/NFTMetadata'
+          - type: 'null'
+        nfi_metadata:
+          oneOf:
+          - $ref: '#/components/schemas/NFIItemMetadata'
+          - type: 'null'
+        parts:
+          oneOf:
+          - type: 'null'
+        colors:
+          oneOf:
+          - $ref: '#/components/schemas/OutfitItemColors'
+          - type: 'null'
+        selected_style:
+          type: integer
+      required:
+      - descriptor_id
+      - active_palette
+      - account_bound
+      - nft_metadata
+      - nfi_metadata
+    NFIItemMetadata:
+      type: object
+      properties:
+        stack_id:
+          type: string
+        item_number:
+          type: integer
+      required:
+      - stack_id
+      - item_number
+    SetUserEmailResponse:
+      type: object
+      properties: {}
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+      - message
+    PetInfo:
+      type: object
+      properties:
+        name:
+          type: string
+        stack_id:
+          type: string
+        descriptor_id:
+          type: string
+        outfit:
+          items:
+            $ref: '#/components/schemas/Clothing'
+          type: array
+      required:
+      - name
+      - stack_id
+      - descriptor_id
+      - outfit
+  securitySchemes:
+    cookie_hr_s_production:
+      name: hr_s_production
+      in: cookie
+      description: null
+      type: apiKey

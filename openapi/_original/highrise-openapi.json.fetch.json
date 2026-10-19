@@ -1,0 +1,12 @@
+{
+ "url": "https://create.highrise.game/api/openapi.json",
+ "final": "https://create.highrise.game/api/openapi.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 128901,
+ "sha256": "a5ef6adad32ec21fa179136ee9437fdd128494b46420aea5277a26daa544188a",
+ "fetched_at": "2026-10-19",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "note": "re-archived: the provider's current document replaced a stale archive (roadmap#793); the old files are in openapi/_superseded/2026-10-19-stale"
+}

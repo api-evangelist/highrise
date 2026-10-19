@@ -1,0 +1,136 @@
+openapi: 3.2.0
+info:
+  title: Create Release Notes API
+  version: '1.0'
+tags:
+- name: release_notes
+paths:
+  /api/worlds/{world_id}/release_notes:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Table_WorldReleaseNotes'
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      - name: sort
+        in: query
+        schema:
+          type: integer
+      - name: page
+        in: query
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        schema:
+          type: integer
+      security:
+      - cookie/hr_s_production: []
+      summary: Get Release Notes
+      tags:
+      - release_notes
+      operationId: get_release_notes
+  /api/worlds/{world_id}/release_notes/{release_notes_id}:
+    patch:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateReleaseNotesResponse'
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: release_notes_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateReleaseNotesRequest'
+        required: true
+      security:
+      - cookie/hr_s_production: []
+      summary: Update Release Notes
+      tags:
+      - release_notes
+      operationId: update_release_notes
+components:
+  schemas:
+    UpdateReleaseNotesResponse:
+      type: object
+      properties:
+        notes:
+          $ref: '#/components/schemas/WorldReleaseNotes'
+      required:
+      - notes
+    UpdateReleaseNotesRequest:
+      type: object
+      properties:
+        notes:
+          oneOf:
+          - type: string
+          - type: 'null'
+    WorldReleaseNotes:
+      type: object
+      properties:
+        _id:
+          type: string
+        world_id:
+          type: string
+        version:
+          type: string
+        notes:
+          type: string
+      required:
+      - _id
+      - world_id
+      - version
+      - notes
+    Table_WorldReleaseNotes:
+      type: object
+      properties:
+        elements:
+          items:
+            $ref: '#/components/schemas/WorldReleaseNotes'
+          type: array
+        total:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+      required:
+      - elements
+      - total
+      - limit
+      - offset
+  securitySchemes:
+    cookie_hr_s_production:
+      name: hr_s_production
+      in: cookie
+      description: null
+      type: apiKey

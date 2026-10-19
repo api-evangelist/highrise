@@ -1,0 +1,73 @@
+openapi: 3.2.0
+info:
+  title: Create Creator Exchange API
+  version: '1.0'
+tags:
+- name: creator_exchange
+paths:
+  /api/creator_exchange:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCESettingsResponse'
+      summary: Get Ce Settings
+      tags:
+      - creator_exchange
+      operationId: get_ce_settings
+    post:
+      responses:
+        '201':
+          description: No content
+      parameters:
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCECashoutRequest'
+        required: true
+      security:
+      - cookie/hr_s_production: []
+      summary: Create Ce Cashout
+      tags:
+      - creator_exchange
+      operationId: create_ce_cashout
+components:
+  schemas:
+    GetCESettingsResponse:
+      type: object
+      properties:
+        settings:
+          $ref: '#/components/schemas/CESettings'
+      required:
+      - settings
+    CreateCECashoutRequest:
+      type: object
+      properties:
+        amount:
+          type: integer
+      required:
+      - amount
+    CESettings:
+      type: object
+      properties:
+        cashout_rate:
+          type: integer
+        cashout_amount_min:
+          type: integer
+      required:
+      - cashout_rate
+      - cashout_amount_min
+  securitySchemes:
+    cookie_hr_s_production:
+      name: hr_s_production
+      in: cookie
+      description: null
+      type: apiKey

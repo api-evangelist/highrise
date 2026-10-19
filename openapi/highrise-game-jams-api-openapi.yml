@@ -1,0 +1,93 @@
+openapi: 3.2.0
+info:
+  title: Create Game Jams API
+  version: '1.0'
+tags:
+- name: game-jams
+paths:
+  /api/game-jams:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Table_GameJam'
+      parameters:
+      - name: page
+        in: query
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        schema:
+          type: integer
+      - name: tag
+        in: query
+        schema:
+          type: string
+      - name: name
+        in: query
+        schema:
+          type: string
+      summary: Get Game Jams
+      tags:
+      - game-jams
+      operationId: get_game_jams
+components:
+  schemas:
+    GameJam:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        tag:
+          oneOf:
+          - type: string
+          - type: 'null'
+        post_id:
+          oneOf:
+          - type: string
+          - type: 'null'
+        image_url:
+          oneOf:
+          - type: string
+          - type: 'null'
+        starts_at:
+          oneOf:
+          - type: string
+          - type: 'null'
+        expires_at:
+          oneOf:
+          - type: string
+          - type: 'null'
+      required:
+      - name
+      - description
+    Table_GameJam:
+      type: object
+      properties:
+        elements:
+          items:
+            $ref: '#/components/schemas/GameJam'
+          type: array
+        total:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+      required:
+      - elements
+      - total
+      - limit
+      - offset
+  securitySchemes:
+    cookie_hr_s_production:
+      name: hr_s_production
+      in: cookie
+      description: null
+      type: apiKey

@@ -1,0 +1,306 @@
+openapi: 3.2.0
+info:
+  title: Create World Wallet API
+  version: '1.0'
+tags:
+- name: world-wallet
+paths:
+  /api/worlds/{world_id}/wallet:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetWorldWalletResponse'
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Get World Wallet
+      tags:
+      - world-wallet
+      operationId: get_world_wallet
+    post:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SetWorldWalletSettingsResponse'
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetWorldWalletSettingsParams'
+        required: true
+      security:
+      - cookie/hr_s_production: []
+      summary: Set World Wallet Settings
+      tags:
+      - world-wallet
+      operationId: set_world_wallet_settings
+  /api/worlds/{world_id}/wallet/logs:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Table_WorldWalletLog'
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      - name: sort
+        in: query
+        schema:
+          type: integer
+      - name: page
+        in: query
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        schema:
+          type: integer
+      - name: descriptions
+        in: query
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Get World Wallet Logs
+      tags:
+      - world-wallet
+      operationId: get_world_wallet_logs
+  /api/worlds/{world_id}/wallet/deposit:
+    post:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DepositToToWorldWalletResponse'
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DepositToWorldWalletParams'
+        required: true
+      security:
+      - cookie/hr_s_production: []
+      summary: Deposit To World Wallet
+      tags:
+      - world-wallet
+      operationId: deposit_to_world_wallet
+  /api/worlds/{world_id}/wallet/withdraw:
+    post:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WithdrawFromWorldWalletResponse'
+      parameters:
+      - name: world_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WithdrawFromWorldWalletParams'
+        required: true
+      security:
+      - cookie/hr_s_production: []
+      summary: Withdraw From World Wallet
+      tags:
+      - world-wallet
+      operationId: withdraw_from_world_wallet
+components:
+  schemas:
+    WithdrawFromWorldWalletParams:
+      type: object
+      properties:
+        currency:
+          type: integer
+        amount:
+          type: integer
+        custom_currency_id:
+          oneOf:
+          - type: string
+          - type: 'null'
+      required:
+      - currency
+      - amount
+    Table_WorldWalletLog:
+      type: object
+      properties:
+        elements:
+          items:
+            $ref: '#/components/schemas/WorldWalletLog'
+          type: array
+        total:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+      required:
+      - elements
+      - total
+      - limit
+      - offset
+    WorldWalletLog:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/User2'
+        amount:
+          type: integer
+        currency:
+          type: string
+        transaction:
+          type: string
+          enum:
+          - deposit
+          - withdrawal
+          - mint
+          - transfer
+          - ad_campaign_deposit
+          - ad_campaign_withdraw
+        created_at:
+          type: string
+        updated_at:
+          type: string
+      required:
+      - user
+      - amount
+      - currency
+      - transaction
+      - created_at
+      - updated_at
+    DepositToToWorldWalletResponse:
+      type: object
+      properties:
+        wallet:
+          type: object
+          additionalProperties:
+            type: integer
+      required:
+      - wallet
+    WithdrawFromWorldWalletResponse:
+      type: object
+      properties:
+        wallet:
+          type: object
+          additionalProperties:
+            type: integer
+      required:
+      - wallet
+    DepositToWorldWalletParams:
+      type: object
+      properties:
+        currency:
+          type: integer
+        amount:
+          type: integer
+      required:
+      - currency
+      - amount
+    SetWorldWalletSettingsParams:
+      type: object
+      properties:
+        settings:
+          type: object
+          additionalProperties:
+            type: integer
+      required:
+      - settings
+    User2:
+      type: object
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        icon_key:
+          oneOf:
+          - type: string
+          - type: 'null'
+        avatar_key:
+          oneOf:
+          - type: string
+          - type: 'null'
+      required:
+      - id
+      - username
+    SetWorldWalletSettingsResponse:
+      type: object
+      properties: {}
+    GetWorldWalletResponse:
+      type: object
+      properties:
+        wallet:
+          type: object
+          additionalProperties:
+            type: integer
+        settings:
+          type: object
+          additionalProperties:
+            type: integer
+      required:
+      - wallet
+      - settings
+  securitySchemes:
+    cookie_hr_s_production:
+      name: hr_s_production
+      in: cookie
+      description: null
+      type: apiKey

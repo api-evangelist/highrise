@@ -89,32 +89,6 @@ apis:
   - Lua
   - Game Engine
   - World Building
-- aid: highrise:highrise-grabs-api
-  name: Highrise Grabs API
-  description: The grabs API from Highrise — 2 operation(s) for grabs.
-  humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
-  baseURL: https://webapi.highrise.game
-  tags:
-  - grabs
-  properties:
-  - type: OpenAPI
-    url: openapi/highrise-grabs-api-openapi.yml
-  - type: DataModel
-    url: data-model/highrise-data-model.yml
-- aid: highrise:highrise-items-api
-  name: Highrise Items API
-  description: The items API from Highrise — 2 operation(s) for items.
-  humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
-  baseURL: https://webapi.highrise.game
-  tags:
-  - Item
-  tags_raw:
-  - items
-  properties:
-  - type: OpenAPI
-    url: openapi/highrise-items-api-openapi.yml
-  - type: DataModel
-    url: data-model/highrise-data-model.yml
 - aid: highrise:highrise-posts-api
   name: Highrise Posts API
   description: The posts API from Highrise — 2 operation(s) for posts.
@@ -129,20 +103,6 @@ apis:
     url: openapi/highrise-posts-api-openapi.yml
   - type: DataModel
     url: data-model/highrise-data-model.yml
-- aid: highrise:highrise-rooms-api
-  name: Highrise Rooms API
-  description: The rooms API from Highrise — 2 operation(s) for rooms.
-  humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
-  baseURL: https://webapi.highrise.game
-  tags:
-  - Rooms
-  tags_raw:
-  - rooms
-  properties:
-  - type: OpenAPI
-    url: openapi/highrise-rooms-api-openapi.yml
-  - type: DataModel
-    url: data-model/highrise-data-model.yml
 - aid: highrise:highrise-users-api
   name: Highrise Users API
   description: The users API from Highrise — 2 operation(s) for users.
@@ -155,6 +115,330 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/highrise-users-api-openapi.yml
+  - type: DataModel
+    url: data-model/highrise-data-model.yml
+- aid: highrise:highrise-ad-campaigns-api
+  name: Highrise Ad Campaigns API
+  description: The ad-campaigns API from Highrise — 8 operation(s) for ad-campaigns.
+  humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
+  baseURL: wss://highrise.game/web/botapi
+  tags:
+  - ad-campaigns
+  properties:
+  - type: OpenAPI
+    url: openapi/highrise-ad-campaigns-api-openapi.yml
+  - type: DataModel
+    url: data-model/highrise-data-model.yml
+- aid: highrise:highrise-analytics-api
+  name: Highrise Analytics API
+  description: The analytics API from Highrise — 5 operation(s) for analytics.
+  humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
+  baseURL: wss://highrise.game/web/botapi
+  tags:
+  - analytics
+  properties:
+  - type: OpenAPI
+    url: openapi/highrise-analytics-api-openapi.yml
+  - type: DataModel
+    url: data-model/highrise-data-model.yml
+- aid: highrise:highrise-auth-api
+  name: Highrise Auth API
+  description: The auth API from Highrise — 8 operation(s) for auth.
+  humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
+  baseURL: wss://highrise.game/web/botapi
+  tags:
+  - auth
+  properties:
+  - type: OpenAPI
+    url: openapi/highrise-auth-api-openapi.yml
+  - type: DataModel
+    url: data-model/highrise-data-model.yml
+- aid: highrise:highrise-bots-api
+  name: Highrise Bots API
+  description: The bots API from Highrise — 10 operation(s) for bots.
+  humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
+  baseURL: wss://highrise.game/web/botapi
+  tags:
+  - bots
+  properties:
+  - type: OpenAPI
+    url: openapi/highrise-bots-api-openapi.yml
+  - type: DataModel
+    url: data-model/highrise-data-model.yml
+- aid: highrise:highrise-builds-api
+  name: Highrise Builds API
+  description: The builds API from Highrise — 9 operation(s) for builds.
+  humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
+  baseURL: wss://highrise.game/web/botapi
+  tags:
+  - builds
+  properties:
+  - type: OpenAPI
+    url: openapi/highrise-builds-api-openapi.yml
+  - type: DataModel
+    url: data-model/highrise-data-model.yml
+- aid: highrise:highrise-creator-exchange-api
+  name: Highrise Creator Exchange API
+  description: The creator_exchange API from Highrise — 1 operation(s) for creator_exchange.
+  humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
+  baseURL: wss://highrise.game/web/botapi
+  tags:
+  - creator_exchange
+  properties:
+  - type: OpenAPI
+    url: openapi/highrise-creator-exchange-api-openapi.yml
+  - type: DataModel
+    url: data-model/highrise-data-model.yml
+- aid: highrise:highrise-discourse-api
+  name: Highrise Discourse API
+  description: The discourse API from Highrise — 1 operation(s) for discourse.
+  humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
+  baseURL: wss://highrise.game/web/botapi
+  tags:
+  - discourse
+  properties:
+  - type: OpenAPI
+    url: openapi/highrise-discourse-api-openapi.yml
+  - type: DataModel
+    url: data-model/highrise-data-model.yml
+- aid: highrise:highrise-game-jams-api
+  name: Highrise Game Jams API
+  description: The game-jams API from Highrise — 1 operation(s) for game-jams.
+  humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
+  baseURL: wss://highrise.game/web/botapi
+  tags:
+  - game-jams
+  properties:
+  - type: OpenAPI
+    url: openapi/highrise-game-jams-api-openapi.yml
+  - type: DataModel
+    url: data-model/highrise-data-model.yml
+- aid: highrise:highrise-item-assets-api
+  name: Highrise Item Assets API
+  description: The item_assets API from Highrise — 4 operation(s) for item_assets.
+  humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
+  baseURL: wss://highrise.game/web/botapi
+  tags:
+  - item_assets
+  properties:
+  - type: OpenAPI
+    url: openapi/highrise-item-assets-api-openapi.yml
+  - type: DataModel
+    url: data-model/highrise-data-model.yml
+- aid: highrise:highrise-leaderboard-api
+  name: Highrise Leaderboard API
+  description: The leaderboard API from Highrise — 2 operation(s) for leaderboard.
+  humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
+  baseURL: wss://highrise.game/web/botapi
+  tags:
+  - leaderboard
+  properties:
+  - type: OpenAPI
+    url: openapi/highrise-leaderboard-api-openapi.yml
+  - type: DataModel
+    url: data-model/highrise-data-model.yml
+- aid: highrise:highrise-lookup-content-api
+  name: Highrise Lookup Content API
+  description: The lookup-content API from Highrise — 1 operation(s) for lookup-content.
+  humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
+  baseURL: wss://highrise.game/web/botapi
+  tags:
+  - lookup-content
+  properties:
+  - type: OpenAPI
+    url: openapi/highrise-lookup-content-api-openapi.yml
+  - type: DataModel
+    url: data-model/highrise-data-model.yml
+- aid: highrise:highrise-owned-rooms-api
+  name: Highrise Owned Rooms API
+  description: The owned_rooms API from Highrise — 3 operation(s) for owned_rooms.
+  humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
+  baseURL: wss://highrise.game/web/botapi
+  tags:
+  - owned_rooms
+  properties:
+  - type: OpenAPI
+    url: openapi/highrise-owned-rooms-api-openapi.yml
+  - type: DataModel
+    url: data-model/highrise-data-model.yml
+- aid: highrise:highrise-products-api
+  name: Highrise Products API
+  description: The products API from Highrise — 8 operation(s) for products.
+  humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
+  baseURL: wss://highrise.game/web/botapi
+  tags:
+  - products
+  properties:
+  - type: OpenAPI
+    url: openapi/highrise-products-api-openapi.yml
+  - type: DataModel
+    url: data-model/highrise-data-model.yml
+- aid: highrise:highrise-release-notes-api
+  name: Highrise Release Notes API
+  description: The release_notes API from Highrise — 2 operation(s) for release_notes.
+  humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
+  baseURL: wss://highrise.game/web/botapi
+  tags:
+  - release_notes
+  properties:
+  - type: OpenAPI
+    url: openapi/highrise-release-notes-api-openapi.yml
+  - type: DataModel
+    url: data-model/highrise-data-model.yml
+- aid: highrise:highrise-specs-api
+  name: Highrise Specs API
+  description: The specs API from Highrise — 1 operation(s) for specs.
+  humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
+  baseURL: wss://highrise.game/web/botapi
+  tags:
+  - specs
+  properties:
+  - type: OpenAPI
+    url: openapi/highrise-specs-api-openapi.yml
+  - type: DataModel
+    url: data-model/highrise-data-model.yml
+- aid: highrise:highrise-tipalti-api
+  name: Highrise Tipalti API
+  description: The tipalti API from Highrise — 1 operation(s) for tipalti.
+  humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
+  baseURL: wss://highrise.game/web/botapi
+  tags:
+  - tipalti
+  properties:
+  - type: OpenAPI
+    url: openapi/highrise-tipalti-api-openapi.yml
+  - type: DataModel
+    url: data-model/highrise-data-model.yml
+- aid: highrise:highrise-upload-api
+  name: Highrise Upload API
+  description: The upload API from Highrise — 1 operation(s) for upload.
+  humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
+  baseURL: wss://highrise.game/web/botapi
+  tags:
+  - upload
+  properties:
+  - type: OpenAPI
+    url: openapi/highrise-upload-api-openapi.yml
+  - type: DataModel
+    url: data-model/highrise-data-model.yml
+- aid: highrise:highrise-user-api
+  name: Highrise User API
+  description: The user API from Highrise — 1 operation(s) for user.
+  humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
+  baseURL: wss://highrise.game/web/botapi
+  tags:
+  - user
+  properties:
+  - type: OpenAPI
+    url: openapi/highrise-user-api-openapi.yml
+  - type: DataModel
+    url: data-model/highrise-data-model.yml
+- aid: highrise:highrise-user-room-api
+  name: Highrise User Room API
+  description: The user-room API from Highrise — 1 operation(s) for user-room.
+  humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
+  baseURL: wss://highrise.game/web/botapi
+  tags:
+  - user-room
+  properties:
+  - type: OpenAPI
+    url: openapi/highrise-user-room-api-openapi.yml
+  - type: DataModel
+    url: data-model/highrise-data-model.yml
+- aid: highrise:highrise-user-rooms-api
+  name: Highrise User Rooms API
+  description: The user-rooms API from Highrise — 2 operation(s) for user-rooms.
+  humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
+  baseURL: wss://highrise.game/web/botapi
+  tags:
+  - user-rooms
+  properties:
+  - type: OpenAPI
+    url: openapi/highrise-user-rooms-api-openapi.yml
+  - type: DataModel
+    url: data-model/highrise-data-model.yml
+- aid: highrise:highrise-world-api-api
+  name: Highrise World API
+  description: The world_api API from Highrise — 4 operation(s) for world_api.
+  humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
+  baseURL: wss://highrise.game/web/botapi
+  tags:
+  - world_api
+  properties:
+  - type: OpenAPI
+    url: openapi/highrise-world-api-api-openapi.yml
+  - type: DataModel
+    url: data-model/highrise-data-model.yml
+- aid: highrise:highrise-world-builder-assets-api
+  name: Highrise World Builder Assets API
+  description: The world_builder_assets API from Highrise — 11 operation(s) for world_builder_assets.
+  humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
+  baseURL: wss://highrise.game/web/botapi
+  tags:
+  - world_builder_assets
+  properties:
+  - type: OpenAPI
+    url: openapi/highrise-world-builder-assets-api-openapi.yml
+  - type: DataModel
+    url: data-model/highrise-data-model.yml
+- aid: highrise:highrise-world-invites-api
+  name: Highrise World Invites API
+  description: The world_invites API from Highrise — 4 operation(s) for world_invites.
+  humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
+  baseURL: wss://highrise.game/web/botapi
+  tags:
+  - world_invites
+  properties:
+  - type: OpenAPI
+    url: openapi/highrise-world-invites-api-openapi.yml
+  - type: DataModel
+    url: data-model/highrise-data-model.yml
+- aid: highrise:highrise-world-members-api
+  name: Highrise World Members API
+  description: The world_members API from Highrise — 4 operation(s) for world_members.
+  humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
+  baseURL: wss://highrise.game/web/botapi
+  tags:
+  - world_members
+  properties:
+  - type: OpenAPI
+    url: openapi/highrise-world-members-api-openapi.yml
+  - type: DataModel
+    url: data-model/highrise-data-model.yml
+- aid: highrise:highrise-world-roles-api
+  name: Highrise World Roles API
+  description: The world_roles API from Highrise — 5 operation(s) for world_roles.
+  humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
+  baseURL: wss://highrise.game/web/botapi
+  tags:
+  - world_roles
+  properties:
+  - type: OpenAPI
+    url: openapi/highrise-world-roles-api-openapi.yml
+  - type: DataModel
+    url: data-model/highrise-data-model.yml
+- aid: highrise:highrise-world-wallet-api
+  name: Highrise World Wallet API
+  description: The world-wallet API from Highrise — 4 operation(s) for world-wallet.
+  humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
+  baseURL: wss://highrise.game/web/botapi
+  tags:
+  - world-wallet
+  properties:
+  - type: OpenAPI
+    url: openapi/highrise-world-wallet-api-openapi.yml
+  - type: DataModel
+    url: data-model/highrise-data-model.yml
+- aid: highrise:highrise-worlds-api
+  name: Highrise Worlds API
+  description: The worlds API from Highrise — 9 operation(s) for worlds.
+  humanURL: https://create.highrise.game/learn/guides/bots/creating-a-bot
+  baseURL: wss://highrise.game/web/botapi
+  tags:
+  - worlds
+  properties:
+  - type: OpenAPI
+    url: openapi/highrise-worlds-api-openapi.yml
   - type: DataModel
     url: data-model/highrise-data-model.yml
 maintainers:

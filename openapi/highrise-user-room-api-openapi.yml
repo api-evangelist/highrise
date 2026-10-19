@@ -1,0 +1,168 @@
+openapi: 3.2.0
+info:
+  title: Create User Room API
+  version: '1.0'
+tags:
+- name: user-room
+paths:
+  /api/user-room/{room_id}:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoomProfile'
+      parameters:
+      - name: room_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: hr_s_production
+        in: cookie
+        schema:
+          type: string
+      security:
+      - cookie/hr_s_production: []
+      summary: Get User Room
+      tags:
+      - user-room
+      operationId: get_user_room
+components:
+  schemas:
+    OutfitItemColors:
+      type: object
+      properties:
+        linked_colors:
+          type: string
+    RoomUser:
+      type: object
+      properties:
+        user_id:
+          type: string
+        name:
+          type: string
+        outfit:
+          items:
+            $ref: '#/components/schemas/OutfitItem'
+          type: array
+        avatar_key:
+          oneOf:
+          - type: string
+          - type: 'null'
+        icon_key:
+          oneOf:
+          - type: string
+          - type: 'null'
+      required:
+      - user_id
+      - name
+      - outfit
+      - avatar_key
+      - icon_key
+    RoomPrivilege:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/RoomUser'
+        is_moderator:
+          type: boolean
+        is_designer:
+          type: boolean
+        is_owner:
+          type: boolean
+      required:
+      - user
+      - is_moderator
+      - is_designer
+      - is_owner
+    BotInfo2:
+      type: object
+      properties:
+        bot_id:
+          type: string
+        bot_name:
+          type: string
+      required:
+      - bot_id
+      - bot_name
+    OutfitItem:
+      type: object
+      properties:
+        item_id:
+          type: string
+        name:
+          type: string
+        rarity:
+          type: string
+        active_palette:
+          type: integer
+        parts:
+          type: integer
+        colors:
+          $ref: '#/components/schemas/OutfitItemColors'
+        account_bound:
+          type: boolean
+        metadata:
+          oneOf:
+          - type: 'null'
+        selected_style:
+          type: integer
+        category:
+          oneOf:
+          - type: string
+          - type: 'null'
+      required:
+      - item_id
+      - name
+      - rarity
+      - active_palette
+      - parts
+      - colors
+    RoomProfile:
+      type: object
+      properties:
+        room_id:
+          type: string
+        name:
+          type: string
+        max_count:
+          type: integer
+        current_count:
+          type: integer
+        media_url:
+          type: string
+        language:
+          type: string
+        land_token_id:
+          oneOf:
+          - type: string
+          - type: 'null'
+        description:
+          type: string
+        privileges:
+          items:
+            $ref: '#/components/schemas/RoomPrivilege'
+          type: array
+        bots:
+          items:
+            $ref: '#/components/schemas/BotInfo2'
+          type: array
+      required:
+      - room_id
+      - name
+      - max_count
+      - current_count
+      - media_url
+      - language
+      - land_token_id
+      - description
+      - privileges
+  securitySchemes:
+    cookie_hr_s_production:
+      name: hr_s_production
+      in: cookie
+      description: null
+      type: apiKey
