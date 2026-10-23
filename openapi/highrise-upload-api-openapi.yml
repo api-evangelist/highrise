@@ -74,3 +74,9 @@ components:
       in: cookie
       description: null
       type: apiKey
+x-provenance:
+  method: harvested
+  publisher: Highrise
+  source: https://create.highrise.game/api/openapi.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
